@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criterion D: Antibiotics & MRSA Mastery Hub</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧬</text></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -69,7 +72,7 @@
         /* Header */
         header {
             background: linear-gradient(135deg, var(--header-grad-1), var(--header-grad-2));
-            padding: 3.5rem 2rem;
+            padding: 3rem 2rem;
             text-align: center;
             color: white;
             box-shadow: var(--shadow-card);
@@ -77,14 +80,14 @@
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         header p {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto;
@@ -97,9 +100,10 @@
             background: rgba(255, 255, 255, 0.15);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 99px;
             font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.2s;
         }
@@ -110,191 +114,156 @@
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 2rem;
         }
 
-        section { margin-bottom: 4rem; }
+        /* Tab Navigation */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
 
-        .section-header { margin-bottom: 1.5rem; }
+        .tab-btn {
+            background-color: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Tab Content Area */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header { margin-bottom: 1.5rem; text-align: center; }
         .section-header h2 { font-size: 1.8rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 0.25rem; }
         .section-header p { color: var(--text-muted); font-size: 1rem; }
 
         /* Flashcards */
         .flashcard-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            max-width: 800px;
-            margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            gap: 1.5rem; max-width: 800px; margin: 0 auto;
         }
 
         .nav-arrow {
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            background-color: var(--bg-card); color: var(--text-main);
+            border: 1px solid var(--border-color); width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; font-weight: bold; cursor: pointer;
-            box-shadow: var(--shadow-sm); z-index: 10;
-            transition: all 0.2s;
+            box-shadow: var(--shadow-sm); z-index: 10; transition: all 0.2s;
         }
-
         .nav-arrow:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
 
-        .cards-wrapper {
-            position: relative;
-            width: 100%;
-            height: 260px; /* Fixed height prevents overlap */
-            perspective: 1000px;
-        }
-
-        .card {
-            position: absolute; width: 100%; height: 100%;
-            cursor: pointer; opacity: 0; pointer-events: none;
-            transform: translateX(40px) scale(0.95);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
+        .cards-wrapper { position: relative; width: 100%; height: 260px; perspective: 1000px; }
+        .card { position: absolute; width: 100%; height: 100%; cursor: pointer; opacity: 0; pointer-events: none; transform: translateX(40px) scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease; }
         .card.active { opacity: 1; pointer-events: auto; transform: translateX(0) scale(1); z-index: 5; }
         .card.prev { transform: translateX(-40px) scale(0.95); }
 
-        .card-inner {
-            width: 100%; height: 100%;
-            transition: transform 0.6s; transform-style: preserve-3d; position: relative;
-        }
-
+        .card-inner { width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; position: relative; }
         .card.flipped .card-inner { transform: rotateY(180deg); }
-
-        .card-front, .card-back {
-            width: 100%; height: 100%; position: absolute; backface-visibility: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 2rem; border-radius: var(--radius);
-            background-color: var(--bg-card); border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-card); text-align: center;
-        }
-
+        .card-front, .card-back { width: 100%; height: 100%; position: absolute; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; border-radius: var(--radius); background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); text-align: center; }
         .card-front { font-size: 1.6rem; font-weight: 700; color: var(--accent-primary); }
         .card-back { transform: rotateY(180deg); font-size: 1.1rem; color: var(--text-muted); }
-
         .card-counter { text-align: center; margin-top: 1.5rem; font-weight: 600; color: var(--text-muted); }
 
         /* Accordions / Chapters */
         .accordion-item {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
+            background-color: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: var(--radius); margin-bottom: 1rem; box-shadow: var(--shadow-sm); overflow: hidden;
         }
-
         .accordion-header {
-            width: 100%; text-align: left; padding: 1.25rem 1.5rem;
-            background: transparent; border: none; color: var(--text-main);
-            font-size: 1.2rem; font-weight: 600; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; text-align: left; padding: 1.25rem 1.5rem; background: transparent; border: none; color: var(--text-main); font-size: 1.15rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
-
         .accordion-header:hover { background-color: rgba(79, 70, 229, 0.03); }
-
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-
-        .accordion-inner {
-            padding: 0 1.5rem 1.5rem 1.5rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            margin-top: 0.5rem; padding-top: 1rem;
-        }
-
+        .accordion-inner { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 1rem; }
         .accordion-inner h4 { color: var(--text-main); margin: 1rem 0 0.5rem 0; font-size: 1.05rem; font-weight: 600; }
         .accordion-inner p { margin-bottom: 0.75rem; }
         .accordion-inner ul { margin-left: 1.5rem; margin-bottom: 1rem; }
 
         .highlight-box {
-            background-color: rgba(79, 70, 229, 0.05);
-            border-left: 4px solid var(--accent-primary);
-            padding: 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0;
-            color: var(--text-main); font-weight: 500;
+            background-color: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--accent-primary);
+            padding: 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; color: var(--text-main); font-weight: 500;
         }
 
         /* Quiz UI */
         .question-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 2rem; margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-sm);
+            background-color: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);
         }
-
         .question-card h3 { font-size: 1.15rem; color: var(--text-main); margin-bottom: 1rem; }
-
-        .quiz-options {
-            list-style: none; display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem;
-        }
-
+        .quiz-options { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem; }
         .quiz-options label {
-            display: flex; align-items: center; padding: 1rem;
-            border-radius: 8px; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); cursor: pointer;
-            color: var(--text-main); font-weight: 500; transition: border-color 0.2s;
+            display: flex; align-items: center; padding: 1rem; border-radius: 8px; background-color: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; color: var(--text-main); font-weight: 500; transition: border-color 0.2s;
         }
-
         .quiz-options label:hover { border-color: var(--accent-primary); }
         .quiz-options input[type="radio"] { margin-right: 12px; accent-color: var(--accent-primary); transform: scale(1.2); }
-
         .quiz-text-input {
-            width: 100%; padding: 1rem; border-radius: 8px;
-            border: 1px solid var(--border-color); background-color: var(--bg-input);
-            color: var(--text-main); font-size: 1rem; outline: none; font-family: inherit;
+            width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--bg-input); color: var(--text-main); font-size: 1rem; outline: none; font-family: inherit;
         }
-
         .quiz-text-input:focus { border-color: var(--accent-primary); }
-
-        .quiz-options label.correct-answer, .quiz-text-input.correct-input {
-            background-color: var(--correct-bg); color: var(--correct-text); border-color: var(--correct-border);
-        }
-
-        .quiz-options label.wrong-answer, .quiz-text-input.wrong-input {
-            background-color: var(--wrong-bg); color: var(--wrong-text); border-color: var(--wrong-border);
-        }
-
-        .text-feedback {
-            margin-top: 0.75rem; padding: 0.75rem; border-radius: 8px;
-            background-color: var(--correct-bg); color: var(--correct-text);
-            border: 1px solid var(--correct-border); display: none; font-weight: 600;
-        }
-
+        
+        .quiz-options label.correct-answer, .quiz-text-input.correct-input { background-color: var(--correct-bg); color: var(--correct-text); border-color: var(--correct-border); }
+        .quiz-options label.wrong-answer, .quiz-text-input.wrong-input { background-color: var(--wrong-bg); color: var(--wrong-text); border-color: var(--wrong-border); }
+        .text-feedback { margin-top: 0.75rem; padding: 0.75rem; border-radius: 8px; background-color: var(--correct-bg); color: var(--correct-text); border: 1px solid var(--correct-border); display: none; font-weight: 600; }
+        
         .quiz-submit-btn {
-            display: block; width: 100%; max-width: 400px; margin: 2rem auto;
-            padding: 1rem; background-color: var(--accent-primary); color: white;
-            border: none; border-radius: 8px; font-size: 1.15rem; font-weight: 700;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); transition: background-color 0.3s;
+            display: block; width: 100%; max-width: 400px; margin: 2rem auto; padding: 1rem; background-color: var(--accent-primary); color: white; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); transition: background-color 0.3s;
         }
         .quiz-submit-btn:hover { background-color: var(--accent-hover); }
-
         .quiz-score-display {
-            text-align: center; font-size: 1.5rem; font-weight: 800;
-            padding: 1.5rem; border-radius: 12px; background-color: var(--bg-card);
-            border: 2px solid var(--border-color); display: none;
+            text-align: center; font-size: 1.5rem; font-weight: 800; padding: 1.5rem; border-radius: 12px; background-color: var(--bg-card); border: 2px solid var(--border-color); display: none; margin-top: 1.5rem;
         }
 
-        /* Back to top */
-        #backToTop {
-            display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
-            background-color: var(--accent-primary); color: white; border: none;
-            width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s;
-            align-items: center; justify-content: center;
-        }
-        #backToTop.show { display: flex; }
-        #backToTop:hover { transform: scale(1.1); background-color: var(--accent-hover); }
+        /* Sources List */
+        .source-list { list-style: none; display: grid; gap: 1rem; }
+        .source-list li { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); }
+        .source-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; }
+        .source-list h3 { color: var(--text-main); font-size: 1.15rem; }
+        .badge { background-color: var(--border-color); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+        .badge.primary { background-color: rgba(79, 70, 229, 0.1); color: var(--accent-primary); }
+        .badge.extra { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
 
         @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
+            header h1 { font-size: 1.8rem; }
             .theme-toggle { position: static; margin-top: 1rem; display: inline-block; }
+            .tabs-nav { gap: 0.5rem; }
+            .tab-btn { font-size: 0.9rem; padding: 0.6rem 1rem; }
             .flashcard-container { flex-direction: column; gap: 1rem; }
             .nav-arrow { display: none; }
             .mobile-nav { display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; }
@@ -307,19 +276,25 @@
 <body>
 
     <header>
-        <h1>Criterion D Mastery Hub</h1>
-        <p>Antibiotic Resistance & MRSA Deep Dive Study Guide</p>
+        <h1>🧬 Criterion D Mastery Hub</h1>
+        <p>Antibiotic Resistance & MRSA Study Guide</p>
         <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
     </header>
 
     <div class="container">
         
-        <section>
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-vocab')">🗂️ Vocabulary</button>
+            <button class="tab-btn" onclick="openTab('tab-modules')">📖 Study Modules</button>
+            <button class="tab-btn" onclick="openTab('tab-quiz')">📝 Mini-Quiz</button>
+            <button class="tab-btn" onclick="openTab('tab-refs')">📚 References</button>
+        </nav>
+
+        <div id="tab-vocab" class="tab-content active">
             <div class="section-header">
-                <h2>1. Vocabulary Drill</h2>
+                <h2>Vocabulary Drill</h2>
                 <p>Master the exact scientific definitions required for your test.</p>
             </div>
-            
             <div class="flashcard-container">
                 <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
                 <div class="cards-wrapper" id="cards-wrapper"></div>
@@ -330,14 +305,13 @@
                 <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
             </div>
             <div class="card-counter" id="card-counter">1 / 22</div>
-        </section>
+        </div>
 
-        <section>
+        <div id="tab-modules" class="tab-content">
             <div class="section-header">
-                <h2>2. The Learning Chapters (Everything You Need to Know)</h2>
-                <p>These modules synthesize the biology, statistics, and impacts from all original and extended articles.</p>
+                <h2>The Learning Chapters</h2>
+                <p>Everything you need to know, synthesized from all original and extended articles.</p>
             </div>
-            
             <div class="accordion">
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
@@ -382,7 +356,6 @@
                             <p>Using the metric "Defined Daily Doses" (DDD), researchers mapped global antibiotic usage.</p>
                             <p>In 2015, global consumption reached <strong>42 billion DDDs</strong>. This represents a massive <strong>65% increase</strong> since the year 2000. The primary driver of this spike was economic growth in low and middle-income countries, which made medications more financially accessible to citizens.</p>
                             <h4>The 3 Mathematical Models for 2030:</h4>
-                            <p>Scientists used mathematical models to predict three possible futures for global consumption by the year 2030:</p>
                             <ul>
                                 <li><strong>Pessimistic Scenario:</strong> A massive <strong>200% increase</strong> if no new policies are created to curb over-prescription.</li>
                                 <li><strong>Baseline Growth:</strong> A <strong>15% increase</strong> simply driven by standard global population growth.</li>
@@ -404,9 +377,9 @@
                             </div>
                             <p>According to the World Health Organization (WHO), bacterial AMR was directly responsible for <strong>1.27 million global deaths</strong> in 2019.</p>
                             <h4>The Trillion Dollar Cost</h4>
-                            <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs, and patients must stay in intensive care longer. The World Bank estimates that AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
+                            <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs. The World Bank estimates that AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
                             <h4>The Pipeline Crisis</h4>
-                            <p>We are running out of effective drugs. Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration (e.g., 7 days) and cure the patient. Ethically and economically, this is a crisis because companies prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
+                            <p>Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration and cure the patient. Ethically and economically, this is a crisis because companies prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
                         </div>
                     </div>
                 </div>
@@ -419,34 +392,81 @@
                     <div class="accordion-content">
                         <div class="accordion-inner">
                             <h4>Surface Survival (CDC Data)</h4>
-                            <p>The CDC warns that MRSA bacteria are incredibly resilient. Unlike fragile viruses, MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>. This leads to Community-Associated MRSA (CA-MRSA).</p>
+                            <p>The CDC warns that MRSA bacteria are incredibly resilient. MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>.</p>
                             <h4>Genetic Fingerprinting</h4>
                             <p>Scientists track superbugs by identifying the mutated parts of their genes (their "genetic fingerprint"). Researchers recently found superbug DNA outside of hospitals in 71 different environmental locations—including seawater, soil, and the exhaust air blowing out of agricultural farm buildings.</p>
                             <h4>The Post-Antibiotic Era</h4>
-                            <p>Because of this widespread environmental contamination (which health agencies fight using the "One Health" approach), biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to the extreme risk of untreatable infection.</p>
+                            <p>Because of widespread environmental contamination, biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to the extreme risk of untreatable infection.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section>
+        <div id="tab-quiz" class="tab-content">
             <div class="section-header">
-                <h2>3. Dynamic Mini-Quiz</h2>
+                <h2>Dynamic Mini-Quiz</h2>
                 <p>Test yourself! 10 random questions (MCQ & Typed) are selected from a large pool on every refresh.</p>
             </div>
-            
             <div id="quiz-form"></div>
-            
             <button class="quiz-submit-btn" onclick="gradeQuiz()">Submit & Grade Answers</button>
             <div class="quiz-score-display" id="quiz-score"></div>
-        </section>
+        </div>
+
+        <div id="tab-refs" class="tab-content">
+            <div class="section-header">
+                <h2>Reference Directory</h2>
+                <p>The source materials synthesizing this hub.</p>
+            </div>
+            <ul class="source-list">
+                <li>
+                    <div class="source-header">
+                        <h3>What if people use too much antibiotics?</h3>
+                        <span class="badge primary">Original Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al.</em></p>
+                    <p>Global antibiotic consumption data and 2030 mathematical projections.</p>
+                </li>
+                <li>
+                    <div class="source-header">
+                        <h3>How common are superbugs in US hospitals?</h3>
+                        <span class="badge primary">Original Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al.</em></p>
+                    <p>National Inpatient Sample database trends of mild vs. severe MRSA.</p>
+                </li>
+                <li>
+                    <div class="source-header">
+                        <h3>WHO Fact Sheet: AMR</h3>
+                        <span class="badge extra">Extended Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>World Health Organization</em></p>
+                    <p>Data on the $1 trillion economic threat of AMR and pipeline crisis.</p>
+                </li>
+            </ul>
+        </div>
         
     </div>
 
-    <button onclick="scrollToTop()" id="backToTop" title="Go to top">&#8593;</button>
-
     <script>
+        // --- TAB LOGIC ---
+        function openTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Remove active class from buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Show target tab
+            document.getElementById(tabId).classList.add('active');
+            // Add active class to clicked button
+            event.currentTarget.classList.add('active');
+            // Scroll to top of container smoothly
+            window.scrollTo({ top: document.querySelector('.container').offsetTop - 20, behavior: 'smooth' });
+        }
+
         // --- 1. FLASHCARD LOGIC ---
         const vocabData = [
             { term: "Antibiotics", def: "Medicines that inhibit the growth of or destroy microorganisms/bacteria." },
@@ -552,7 +572,7 @@
             { type: 'text', q: "Fill in the Blank: Biologists warn we will enter the '____-antibiotic era', where routine surgeries become deadly.", accepted: ["post", "post-antibiotic"] },
             { type: 'text', q: "Short Answer: When humans kill off sensitive bacteria leaving only resistant ones, this is an example of what scientific concept?", accepted: ["evolution", "natural selection"] },
             { type: 'text', q: "Short Answer: What specific type of injury acts as the primary entry point for MRSA bacteria to enter the human body?", accepted: ["wound", "cut", "scrape"] },
-            { type: 'text', q: "Acronym Check: What does 'MSSA' stand for? (The counterpart to MRSA that CAN be treated).", accepted: ["methicillin-susceptible staphylococcus aureus", "methicillin susceptible staphylococcus aureus"] },
+            { type: 'text', q: "Acronym Check: What does 'MSSA' stand for?", accepted: ["methicillin-susceptible staphylococcus aureus", "methicillin susceptible staphylococcus aureus"] },
             { type: 'text', q: "Fill in the Blank: Because many modern antibiotics are derived from _____, bacteria naturally developed resistance to them millions of years ago.", accepted: ["fungi", "fungus"] },
             { type: 'text', q: "Short Answer: What severe respiratory infection, causing the air sacs of the lungs to fill with fluid, can be a deadly consequence of MRSA?", accepted: ["pneumonia"] },
             { type: 'text', q: "Short Answer: What is the casual term used by the media to describe bacteria resistant to multiple antibiotic drugs?", accepted: ["superbug", "superbugs"] }
@@ -665,17 +685,6 @@
             }
         }
 
-        // --- 4. SCROLL LOGIC ---
-        const backToTopBtn = document.getElementById("backToTop");
-        window.onscroll = function() {
-            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-                backToTopBtn.classList.add("show");
-            } else {
-                backToTopBtn.classList.remove("show");
-            }
-        };
-        function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-
         // --- INIT ALL ---
         window.onload = () => {
             initCards();
@@ -684,8 +693,11 @@
         };
 
         document.addEventListener('keydown', (e) => {
-            if(e.key === 'ArrowRight') nextCard();
-            if(e.key === 'ArrowLeft') prevCard();
+            // Only use arrow keys for flashcards if the vocab tab is active
+            if (document.getElementById('tab-vocab').classList.contains('active')) {
+                if(e.key === 'ArrowRight') nextCard();
+                if(e.key === 'ArrowLeft') prevCard();
+            }
         });
     </script>
 </body>
