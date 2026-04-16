@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criterion D: Antibiotics & MRSA Mastery Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme */
+            --bg-body: #f4f6f8;
+            --bg-card: #ffffff;
+            --bg-input: #f9fafb;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --accent-primary: #4f46e5;
+            --accent-hover: #4338ca;
+            --header-grad-1: #4f46e5;
+            --header-grad-2: #2563eb;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --radius: 12px;
+            
+            /* Status Colors */
+            --correct-bg: #dcfce7;
+            --correct-border: #22c55e;
+            --correct-text: #166534;
+            --wrong-bg: #fee2e2;
+            --wrong-border: #ef4444;
+            --wrong-text: #991b1b;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-body: #0f1115;
+            --bg-card: #1f222b;
+            --bg-input: #16181d;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent-primary: #6366f1;
+            --accent-hover: #818cf8;
+            --header-grad-1: #1e3a8a;
+            --header-grad-2: #312e81;
+            --border-color: #374151;
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            
+            --correct-bg: #064e3b;
+            --correct-border: #10b981;
+            --correct-text: #34d399;
+            --wrong-bg: #7f1d1d;
+            --wrong-border: #ef4444;
+            --wrong-text: #f87171;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--header-grad-1), var(--header-grad-2));
+            padding: 3.5rem 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: var(--shadow-card);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 99px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.25); }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section { margin-bottom: 4rem; }
+
+        .section-header { margin-bottom: 1.5rem; }
+        .section-header h2 { font-size: 1.8rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 0.25rem; }
+        .section-header p { color: var(--text-muted); font-size: 1rem; }
+
+        /* Flashcards */
+        .flashcard-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-arrow {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; cursor: pointer;
+            box-shadow: var(--shadow-sm); z-index: 10;
+            transition: all 0.2s;
+        }
+
+        .nav-arrow:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+
+        .cards-wrapper {
+            position: relative;
+            width: 100%;
+            height: 260px; /* Fixed height prevents overlap */
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute; width: 100%; height: 100%;
+            cursor: pointer; opacity: 0; pointer-events: none;
+            transform: translateX(40px) scale(0.95);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .card.active { opacity: 1; pointer-events: auto; transform: translateX(0) scale(1); z-index: 5; }
+        .card.prev { transform: translateX(-40px) scale(0.95); }
+
+        .card-inner {
+            width: 100%; height: 100%;
+            transition: transform 0.6s; transform-style: preserve-3d; position: relative;
+        }
+
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+
+        .card-front, .card-back {
+            width: 100%; height: 100%; position: absolute; backface-visibility: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 2rem; border-radius: var(--radius);
+            background-color: var(--bg-card); border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-card); text-align: center;
+        }
+
+        .card-front { font-size: 1.6rem; font-weight: 700; color: var(--accent-primary); }
+        .card-back { transform: rotateY(180deg); font-size: 1.1rem; color: var(--text-muted); }
+
+        .card-counter { text-align: center; margin-top: 1.5rem; font-weight: 600; color: var(--text-muted); }
+
+        /* Accordions / Chapters */
+        .accordion-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%; text-align: left; padding: 1.25rem 1.5rem;
+            background: transparent; border: none; color: var(--text-main);
+            font-size: 1.2rem; font-weight: 600; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .accordion-header:hover { background-color: rgba(79, 70, 229, 0.03); }
+
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+
+        .accordion-inner {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 0.5rem; padding-top: 1rem;
+        }
+
+        .accordion-inner h4 { color: var(--text-main); margin: 1rem 0 0.5rem 0; font-size: 1.05rem; font-weight: 600; }
+        .accordion-inner p { margin-bottom: 0.75rem; }
+        .accordion-inner ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+
+        .highlight-box {
+            background-color: rgba(79, 70, 229, 0.05);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0;
+            color: var(--text-main); font-weight: 500;
+        }
+
+        /* Quiz UI */
+        .question-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem; margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .question-card h3 { font-size: 1.15rem; color: var(--text-main); margin-bottom: 1rem; }
+
+        .quiz-options {
+            list-style: none; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem;
+        }
+
+        .quiz-options label {
+            display: flex; align-items: center; padding: 1rem;
+            border-radius: 8px; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); cursor: pointer;
+            color: var(--text-main); font-weight: 500; transition: border-color 0.2s;
+        }
+
+        .quiz-options label:hover { border-color: var(--accent-primary); }
+        .quiz-options input[type="radio"] { margin-right: 12px; accent-color: var(--accent-primary); transform: scale(1.2); }
+
+        .quiz-text-input {
+            width: 100%; padding: 1rem; border-radius: 8px;
+            border: 1px solid var(--border-color); background-color: var(--bg-input);
+            color: var(--text-main); font-size: 1rem; outline: none; font-family: inherit;
+        }
+
+        .quiz-text-input:focus { border-color: var(--accent-primary); }
+
+        .quiz-options label.correct-answer, .quiz-text-input.correct-input {
+            background-color: var(--correct-bg); color: var(--correct-text); border-color: var(--correct-border);
+        }
+
+        .quiz-options label.wrong-answer, .quiz-text-input.wrong-input {
+            background-color: var(--wrong-bg); color: var(--wrong-text); border-color: var(--wrong-border);
+        }
+
+        .text-feedback {
+            margin-top: 0.75rem; padding: 0.75rem; border-radius: 8px;
+            background-color: var(--correct-bg); color: var(--correct-text);
+            border: 1px solid var(--correct-border); display: none; font-weight: 600;
+        }
+
+        .quiz-submit-btn {
+            display: block; width: 100%; max-width: 400px; margin: 2rem auto;
+            padding: 1rem; background-color: var(--accent-primary); color: white;
+            border: none; border-radius: 8px; font-size: 1.15rem; font-weight: 700;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); transition: background-color 0.3s;
+        }
+        .quiz-submit-btn:hover { background-color: var(--accent-hover); }
+
+        .quiz-score-display {
+            text-align: center; font-size: 1.5rem; font-weight: 800;
+            padding: 1.5rem; border-radius: 12px; background-color: var(--bg-card);
+            border: 2px solid var(--border-color); display: none;
+        }
+
+        /* Back to top */
+        #backToTop {
+            display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
+            background-color: var(--accent-primary); color: white; border: none;
+            width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s;
+            align-items: center; justify-content: center;
+        }
+        #backToTop.show { display: flex; }
+        #backToTop:hover { transform: scale(1.1); background-color: var(--accent-hover); }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .theme-toggle { position: static; margin-top: 1rem; display: inline-block; }
+            .flashcard-container { flex-direction: column; gap: 1rem; }
+            .nav-arrow { display: none; }
+            .mobile-nav { display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; }
+            .mobile-nav .nav-arrow { display: flex; }
+            .quiz-options { grid-template-columns: 1fr; }
+        }
+        .mobile-nav { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Criterion D Mastery Hub</h1>
+        <p>Antibiotic Resistance & MRSA Deep Dive Study Guide</p>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </header>
+
+    <div class="container">
+        
+        <section>
+            <div class="section-header">
+                <h2>1. Vocabulary Drill</h2>
+                <p>Master the exact scientific definitions required for your test.</p>
+            </div>
+            
+            <div class="flashcard-container">
+                <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
+                <div class="cards-wrapper" id="cards-wrapper"></div>
+                <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
+            </div>
+            <div class="mobile-nav">
+                <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
+                <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
+            </div>
+            <div class="card-counter" id="card-counter">1 / 22</div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>2. The Learning Chapters (Everything You Need to Know)</h2>
+                <p>These modules synthesize the biology, statistics, and impacts from all original and extended articles.</p>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chapter 1: The Biology of Superbugs & The Arms Race
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p><strong>The Normal Flora:</strong> Humans peacefully coexist with trillions of bacteria that live on our skin and in our gut. For example, <em>Staphylococcus aureus</em> is naturally found on 25% of humans. It is normally harmless unless it enters the body through a <strong>wound</strong> (cut/scrape) or an IV line, at which point it becomes a pathogen.</p>
+                            <h4>How Resistance Actually Happens</h4>
+                            <p>Bacteria do NOT actively "try" to become resistant. Because many modern antibiotics are derived from natural fungi, bacteria and fungi have been locked in a biological "arms race" for billions of years. As a result, a tiny proportion of bacteria naturally possess genes that make them resistant.</p>
+                            <p>When humans take antibiotics unnecessarily (like for a viral cold), the medicine kills off all the sensitive, harmless bacteria. With the competition completely removed, the naturally resistant bacteria ("Superbugs") are free to multiply and spread rapidly. This is a perfect example of <strong>evolution via natural selection</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chapter 2: US Hospital Trends & MRSA Statistics
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p>Scientists analyzed the National Inpatient Sample database (2010-2014) to track MRSA (Methicillin-resistant <em>Staphylococcus aureus</em>) infections in the United States.</p>
+                            <h4>Key Data Points:</h4>
+                            <ul>
+                                <li><strong>Mild vs Severe:</strong> While hospitalizations for mild MRSA skin infections (like abscesses) have actually decreased, hospitalizations for <strong>severe MRSA infections</strong> (like pneumonia or sepsis) have remained constant or slightly increased.</li>
+                                <li><strong>Mortality:</strong> MRSA remains the leading cause of death due to antibiotic-resistant infections in the US.</li>
+                                <li><strong>Geography:</strong> Hospitalization rates are significantly highest in the <strong>Southern United States</strong>. This is due to a warmer climate (which helps bacteria survive and multiply on surfaces) and higher rates of antibiotic prescriptions in those states.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chapter 3: Global Consumption & 2030 Projections
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p>Using the metric "Defined Daily Doses" (DDD), researchers mapped global antibiotic usage.</p>
+                            <p>In 2015, global consumption reached <strong>42 billion DDDs</strong>. This represents a massive <strong>65% increase</strong> since the year 2000. The primary driver of this spike was economic growth in low and middle-income countries, which made medications more financially accessible to citizens.</p>
+                            <h4>The 3 Mathematical Models for 2030:</h4>
+                            <p>Scientists used mathematical models to predict three possible futures for global consumption by the year 2030:</p>
+                            <ul>
+                                <li><strong>Pessimistic Scenario:</strong> A massive <strong>200% increase</strong> if no new policies are created to curb over-prescription.</li>
+                                <li><strong>Baseline Growth:</strong> A <strong>15% increase</strong> simply driven by standard global population growth.</li>
+                                <li><strong>Optimistic Scenario:</strong> An increase limited to <strong>32%</strong> if aggressive global policies are adopted worldwide.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chapter 4: The Economic Threat & Pipeline Crisis (WHO Data)
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="highlight-box">
+                                Note for Criterion D: Use this section to explain the <em>Economic, Ethical, and Social</em> impacts of applied science.
+                            </div>
+                            <p>According to the World Health Organization (WHO), bacterial AMR was directly responsible for <strong>1.27 million global deaths</strong> in 2019.</p>
+                            <h4>The Trillion Dollar Cost</h4>
+                            <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs, and patients must stay in intensive care longer. The World Bank estimates that AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
+                            <h4>The Pipeline Crisis</h4>
+                            <p>We are running out of effective drugs. Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration (e.g., 7 days) and cure the patient. Ethically and economically, this is a crisis because companies prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chapter 5: Transmission, DNA Tracking, & The Post-Antibiotic Era
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <h4>Surface Survival (CDC Data)</h4>
+                            <p>The CDC warns that MRSA bacteria are incredibly resilient. Unlike fragile viruses, MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>. This leads to Community-Associated MRSA (CA-MRSA).</p>
+                            <h4>Genetic Fingerprinting</h4>
+                            <p>Scientists track superbugs by identifying the mutated parts of their genes (their "genetic fingerprint"). Researchers recently found superbug DNA outside of hospitals in 71 different environmental locations—including seawater, soil, and the exhaust air blowing out of agricultural farm buildings.</p>
+                            <h4>The Post-Antibiotic Era</h4>
+                            <p>Because of this widespread environmental contamination (which health agencies fight using the "One Health" approach), biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to the extreme risk of untreatable infection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>3. Dynamic Mini-Quiz</h2>
+                <p>Test yourself! 10 random questions (MCQ & Typed) are selected from a large pool on every refresh.</p>
+            </div>
+            
+            <div id="quiz-form"></div>
+            
+            <button class="quiz-submit-btn" onclick="gradeQuiz()">Submit & Grade Answers</button>
+            <div class="quiz-score-display" id="quiz-score"></div>
+        </section>
+        
+    </div>
+
+    <button onclick="scrollToTop()" id="backToTop" title="Go to top">&#8593;</button>
+
+    <script>
+        // --- 1. FLASHCARD LOGIC ---
+        const vocabData = [
+            { term: "Antibiotics", def: "Medicines that inhibit the growth of or destroy microorganisms/bacteria." },
+            { term: "Antibiotic Resistance", def: "When bacteria evolve to resist the effects of an antibiotic they were once sensitive to." },
+            { term: "MRSA", def: "Methicillin-resistant Staphylococcus aureus; a superbug resistant to common antibiotics." },
+            { term: "MSSA", def: "Methicillin-susceptible Staphylococcus aureus; can be easily treated with normal antibiotics." },
+            { term: "DDD", def: "Defined Daily Dose: Standard amount of medication used by one person in one day." },
+            { term: "Last-Resort Antibiotics", def: "Strong medications used only when all other drugs fail due to resistance." },
+            { term: "Evolution", def: "Change in the genetic composition of a population over many generations." },
+            { term: "Mathematical Model", def: "A computer program using real-world data to predict future outcomes." },
+            { term: "Sepsis", def: "The body's extreme, life-threatening response to infection leading to tissue damage." },
+            { term: "Flora", def: "Collective bacteria and other microorganisms naturally living in/on the human body." },
+            { term: "Pathogen", def: "A microorganism (like a harmful bacteria or virus) that causes infection." },
+            { term: "Superbug", def: "A casual term for a strain of bacteria that has become resistant to multiple antibiotic drugs." },
+            { term: "One Health Approach", def: "A CDC/WHO framework recognizing that human health is connected to animal and environmental health." },
+            { term: "Pipeline Crisis", def: "The economic issue where pharmaceutical companies are no longer developing new antibiotics." },
+            { term: "CA-MRSA", def: "Community-Associated MRSA; infections in healthy people who have NOT been hospitalized recently." },
+            { term: "Genetic Fingerprint", def: "Specific mutated DNA sequences in a bacteria that grant it resistance, which can be tracked." },
+            { term: "Post-Antibiotic Era", def: "A feared future where routine medical procedures become deadly because antibiotics no longer work." }
+        ];
+
+        let currentIndex = 0;
+        const wrapper = document.getElementById('cards-wrapper');
+        const counterEl = document.getElementById('card-counter');
+
+        function initCards() {
+            vocabData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `card ${index === 0 ? 'active' : ''}`;
+                card.setAttribute('onclick', "this.classList.toggle('flipped')");
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">${item.term}</div>
+                        <div class="card-back" style="padding: 1.5rem;">${item.def}</div>
+                    </div>
+                `;
+                wrapper.appendChild(card);
+            });
+            updateCounter();
+        }
+
+        function updateSlider(direction) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => card.classList.remove('active', 'prev', 'flipped'));
+            cards[currentIndex].classList.add('active');
+            
+            if (direction === 'next') {
+                const prevIndex = currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
+                cards[prevIndex].classList.add('prev');
+            } else if (direction === 'prev') {
+                cards[currentIndex].style.transform = "translateX(-40px) scale(0.95)";
+                setTimeout(() => cards[currentIndex].style.transform = "", 50);
+            }
+            updateCounter();
+        }
+
+        function nextCard() { currentIndex = (currentIndex + 1) % vocabData.length; updateSlider('next'); }
+        function prevCard() { currentIndex = (currentIndex - 1 + vocabData.length) % vocabData.length; updateSlider('prev'); }
+        function updateCounter() { counterEl.textContent = `${currentIndex + 1} / ${vocabData.length}`; }
+
+        // --- 2. ACCORDION & THEME ---
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            const content = item.querySelector('.accordion-content');
+            const span = button.querySelector('span');
+            item.classList.toggle('active');
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+                span.style.transform = "rotate(180deg)";
+            } else {
+                content.style.maxHeight = "0";
+                span.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.documentElement;
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        }
+
+        // --- 3. DYNAMIC QUIZ ---
+        const quizPool = [
+            // MCQ
+            { type: 'mcq', q: "What does MRSA specifically stand for?", options: ["Methicillin-resistant Staphylococcus aureus", "Multiple-resistant Streptococcus A", "Methicillin-susceptible Staphylococcus aureus", "Medical-resistant Systemic aureus"], answer: 0 },
+            { type: 'mcq', q: "What was the estimated global antibiotic consumption in 2015?", options: ["12 billion DDDs", "25 billion DDDs", "42 billion DDDs", "65 billion DDDs"], answer: 2 },
+            { type: 'mcq', q: "Which mathematical model scenario predicts a 200% increase in antibiotic consumption by 2030?", options: ["The Optimistic Scenario", "The Baseline Growth Scenario", "The Pipeline Scenario", "The Pessimistic Scenario"], answer: 3 },
+            { type: 'mcq', q: "According to the WHO, how many global deaths was bacterial AMR directly responsible for in 2019?", options: ["500,000", "1.27 million", "5.4 million", "10 million"], answer: 1 },
+            { type: 'mcq', q: "Which region of the US has the highest rates of MRSA hospitalizations?", options: ["Northern US", "Southern US", "Midwest", "West Coast"], answer: 1 },
+            { type: 'mcq', q: "What is the primary driver for the rapid spike in global antibiotic consumption in low and middle-income countries?", options: ["Economic growth making medicine accessible", "New superbug strains", "A drop in global temperatures", "Cessation of hygiene practices"], answer: 0 },
+            { type: 'mcq', q: "What is the 'pipeline crisis' in pharmaceuticals?", options: ["Logistical pipelines are deteriorating", "Companies are no longer investing in creating new antibiotics due to low profitability", "Antibiotics are expiring in transit", "Water pipelines spreading bacteria"], answer: 1 },
+            { type: 'mcq', q: "How long can MRSA survive on environmental surfaces like gym lockers or towels?", options: ["A few seconds", "Up to 5 minutes", "A couple of hours", "Hours, days, or even weeks"], answer: 3 },
+            { type: 'mcq', q: "What happens biologically when humans take antibiotics inappropriately for a viral cold?", options: ["The virus is killed", "It kills sensitive bacteria, allowing resistant ones to multiply without competition", "The antibiotics become a vaccine", "Nothing happens"], answer: 1 },
+            { type: 'mcq', q: "Where were superbug 'genetic fingerprints' recently discovered outside of clinical settings?", options: ["Space stations", "Volcanic ash", "Soil, seawater, and farm exhaust", "Inside deep-sea fish"], answer: 2 },
+            { type: 'mcq', q: "Why do a small proportion of bacteria naturally possess resistance genes?", options: ["They absorb radiation", "They are locked in an evolutionary arms race with fungi", "They choose to mutate", "Ancient viruses injected them"], answer: 1 },
+            // Typed
+            { type: 'text', q: "Fill in the Blank: The World Bank estimates AMR could result in an additional $1 ________ in global healthcare costs by 2050.", accepted: ["trillion", "1 trillion", "one trillion"] },
+            { type: 'text', q: "Acronym Check: What does 'DDD' stand for when measuring antibiotic consumption?", accepted: ["defined daily dose"] },
+            { type: 'text', q: "Acronym Check: What does 'CA-MRSA' specifically stand for?", accepted: ["community-associated mrsa", "community associated mrsa"] },
+            { type: 'text', q: "Short Answer: What medical term describes the body's extreme, life-threatening internal response to an infection?", accepted: ["sepsis"] },
+            { type: 'text', q: "Short Answer: What global health organization published the AMR Fact Sheet emphasizing the 1.27 million death toll? (Acronym acceptable)", accepted: ["who", "world health organization"] },
+            { type: 'text', q: "Fill in the Blank: Biologists warn we will enter the '____-antibiotic era', where routine surgeries become deadly.", accepted: ["post", "post-antibiotic"] },
+            { type: 'text', q: "Short Answer: When humans kill off sensitive bacteria leaving only resistant ones, this is an example of what scientific concept?", accepted: ["evolution", "natural selection"] },
+            { type: 'text', q: "Short Answer: What specific type of injury acts as the primary entry point for MRSA bacteria to enter the human body?", accepted: ["wound", "cut", "scrape"] },
+            { type: 'text', q: "Acronym Check: What does 'MSSA' stand for? (The counterpart to MRSA that CAN be treated).", accepted: ["methicillin-susceptible staphylococcus aureus", "methicillin susceptible staphylococcus aureus"] },
+            { type: 'text', q: "Fill in the Blank: Because many modern antibiotics are derived from _____, bacteria naturally developed resistance to them millions of years ago.", accepted: ["fungi", "fungus"] },
+            { type: 'text', q: "Short Answer: What severe respiratory infection, causing the air sacs of the lungs to fill with fluid, can be a deadly consequence of MRSA?", accepted: ["pneumonia"] },
+            { type: 'text', q: "Short Answer: What is the casual term used by the media to describe bacteria resistant to multiple antibiotic drugs?", accepted: ["superbug", "superbugs"] }
+        ];
+
+        let selectedQuestions = [];
+
+        function initQuiz() {
+            const quizForm = document.getElementById('quiz-form');
+            quizForm.innerHTML = ''; 
+            
+            let shuffledPool = [...quizPool].sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffledPool.slice(0, 10);
+
+            selectedQuestions.forEach((qObj, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'question-card';
+                
+                let innerHtml = `<h3>${index + 1}. ${qObj.q}</h3>`;
+
+                if (qObj.type === 'mcq') {
+                    let optionsHtml = '';
+                    qObj.options.forEach((opt, optIndex) => {
+                        optionsHtml += `
+                            <li>
+                                <label id="label-q${index}-o${optIndex}">
+                                    <input type="radio" name="q${index}" value="${optIndex}">
+                                    ${opt}
+                                </label>
+                            </li>
+                        `;
+                    });
+                    innerHtml += `<ul class="quiz-options">${optionsHtml}</ul>`;
+                } else if (qObj.type === 'text') {
+                    innerHtml += `
+                        <input type="text" id="text-q${index}" class="quiz-text-input" placeholder="Type your answer here..." autocomplete="off">
+                        <div id="feedback-q${index}" class="text-feedback"></div>
+                    `;
+                }
+
+                cardDiv.innerHTML = innerHtml;
+                quizForm.appendChild(cardDiv);
+            });
+        }
+
+        function gradeQuiz() {
+            let score = 0;
+            
+            selectedQuestions.forEach((qObj, index) => {
+                if (qObj.type === 'mcq') {
+                    const selectedInput = document.querySelector(`input[name="q${index}"]:checked`);
+                    
+                    qObj.options.forEach((_, optIndex) => {
+                        document.getElementById(`label-q${index}-o${optIndex}`).classList.remove('correct-answer', 'wrong-answer');
+                    });
+
+                    const correctLabel = document.getElementById(`label-q${index}-o${qObj.answer}`);
+
+                    if (selectedInput) {
+                        const selectedValue = parseInt(selectedInput.value);
+                        if (selectedValue === qObj.answer) {
+                            score++;
+                            correctLabel.classList.add('correct-answer');
+                        } else {
+                            document.getElementById(`label-q${index}-o${selectedValue}`).classList.add('wrong-answer');
+                            correctLabel.classList.add('correct-answer');
+                        }
+                    } else {
+                        correctLabel.classList.add('correct-answer'); 
+                    }
+                } 
+                else if (qObj.type === 'text') {
+                    const inputEl = document.getElementById(`text-q${index}`);
+                    const feedbackEl = document.getElementById(`feedback-q${index}`);
+                    const userAnswer = inputEl.value.trim().toLowerCase();
+                    
+                    inputEl.classList.remove('correct-input', 'wrong-input');
+                    feedbackEl.style.display = 'none';
+
+                    if (qObj.accepted.includes(userAnswer)) {
+                        score++;
+                        inputEl.classList.add('correct-input');
+                    } else {
+                        inputEl.classList.add('wrong-input');
+                        feedbackEl.style.display = 'block';
+                        let correctStr = qObj.accepted[0].charAt(0).toUpperCase() + qObj.accepted[0].slice(1);
+                        feedbackEl.innerHTML = `Correct Answer: <strong>${correctStr}</strong>`;
+                    }
+                }
+            });
+
+            const scoreDisplay = document.getElementById('quiz-score');
+            scoreDisplay.style.display = 'block';
+            scoreDisplay.innerHTML = `You scored ${score} out of 10!`;
+            
+            if(score >= 8) {
+                scoreDisplay.style.color = "var(--correct-text)";
+                scoreDisplay.style.borderColor = "var(--correct-border)";
+                scoreDisplay.style.backgroundColor = "var(--correct-bg)";
+            }
+            else if (score >= 5) {
+                scoreDisplay.style.color = "var(--accent-primary)";
+                scoreDisplay.style.borderColor = "var(--accent-primary)";
+                scoreDisplay.style.backgroundColor = "rgba(79, 70, 229, 0.1)";
+            }
+            else {
+                scoreDisplay.style.color = "var(--wrong-text)";
+                scoreDisplay.style.borderColor = "var(--wrong-border)";
+                scoreDisplay.style.backgroundColor = "var(--wrong-bg)";
+            }
+        }
+
+        // --- 4. SCROLL LOGIC ---
+        const backToTopBtn = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        };
+        function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+
+        // --- INIT ALL ---
+        window.onload = () => {
+            initCards();
+            initQuiz(); 
+            if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight') nextCard();
+            if(e.key === 'ArrowLeft') prevCard();
+        });
+    </script>
+</body>
+</html>
