@@ -137,9 +137,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .tab-btn:hover {
@@ -155,60 +152,32 @@
             box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
         }
 
-        /* Tab Content Area */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .section-header { margin-bottom: 1.5rem; text-align: center; }
         .section-header h2 { font-size: 1.8rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 0.25rem; }
         .section-header p { color: var(--text-muted); font-size: 1rem; }
 
         /* Flashcards */
-        .flashcard-container {
-            display: flex; align-items: center; justify-content: center;
-            gap: 1.5rem; max-width: 800px; margin: 0 auto;
-        }
-
-        .nav-arrow {
-            background-color: var(--bg-card); color: var(--text-main);
-            border: 1px solid var(--border-color); width: 50px; height: 50px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; font-weight: bold; cursor: pointer;
-            box-shadow: var(--shadow-sm); z-index: 10; transition: all 0.2s;
-        }
+        .flashcard-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+        .nav-arrow { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: var(--shadow-sm); z-index: 10; transition: all 0.2s; }
         .nav-arrow:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
-
         .cards-wrapper { position: relative; width: 100%; height: 260px; perspective: 1000px; }
         .card { position: absolute; width: 100%; height: 100%; cursor: pointer; opacity: 0; pointer-events: none; transform: translateX(40px) scale(0.95); transition: opacity 0.4s ease, transform 0.4s ease; }
         .card.active { opacity: 1; pointer-events: auto; transform: translateX(0) scale(1); z-index: 5; }
         .card.prev { transform: translateX(-40px) scale(0.95); }
-
         .card-inner { width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; position: relative; }
         .card.flipped .card-inner { transform: rotateY(180deg); }
         .card-front, .card-back { width: 100%; height: 100%; position: absolute; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; border-radius: var(--radius); background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); text-align: center; }
         .card-front { font-size: 1.6rem; font-weight: 700; color: var(--accent-primary); }
-        .card-back { transform: rotateY(180deg); font-size: 1.1rem; color: var(--text-muted); }
+        .card-back { transform: rotateY(180deg); font-size: 1.05rem; color: var(--text-muted); }
         .card-counter { text-align: center; margin-top: 1.5rem; font-weight: 600; color: var(--text-muted); }
 
         /* Accordions / Chapters */
-        .accordion-item {
-            background-color: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: var(--radius); margin-bottom: 1rem; box-shadow: var(--shadow-sm); overflow: hidden;
-        }
-        .accordion-header {
-            width: 100%; text-align: left; padding: 1.25rem 1.5rem; background: transparent; border: none; color: var(--text-main); font-size: 1.15rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-        }
+        .accordion-item { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); margin-bottom: 1rem; box-shadow: var(--shadow-sm); overflow: hidden; }
+        .accordion-header { width: 100%; text-align: left; padding: 1.25rem 1.5rem; background: transparent; border: none; color: var(--text-main); font-size: 1.15rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .accordion-header:hover { background-color: rgba(79, 70, 229, 0.03); }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
         .accordion-inner { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 0.5rem; padding-top: 1rem; }
@@ -216,45 +185,47 @@
         .accordion-inner p { margin-bottom: 0.75rem; }
         .accordion-inner ul { margin-left: 1.5rem; margin-bottom: 1rem; }
 
-        .highlight-box {
-            background-color: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--accent-primary);
-            padding: 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; color: var(--text-main); font-weight: 500;
+        .article-tag {
+            display: inline-block;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--accent-primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .article-tag.extra {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
         }
 
         /* Quiz UI */
-        .question-card {
-            background-color: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);
-        }
+        .question-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); }
         .question-card h3 { font-size: 1.15rem; color: var(--text-main); margin-bottom: 1rem; }
         .quiz-options { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem; }
-        .quiz-options label {
-            display: flex; align-items: center; padding: 1rem; border-radius: 8px; background-color: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; color: var(--text-main); font-weight: 500; transition: border-color 0.2s;
-        }
+        .quiz-options label { display: flex; align-items: center; padding: 1rem; border-radius: 8px; background-color: var(--bg-input); border: 1px solid var(--border-color); cursor: pointer; color: var(--text-main); font-weight: 500; transition: border-color 0.2s; }
         .quiz-options label:hover { border-color: var(--accent-primary); }
         .quiz-options input[type="radio"] { margin-right: 12px; accent-color: var(--accent-primary); transform: scale(1.2); }
-        .quiz-text-input {
-            width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--bg-input); color: var(--text-main); font-size: 1rem; outline: none; font-family: inherit;
-        }
+        .quiz-text-input { width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--bg-input); color: var(--text-main); font-size: 1rem; outline: none; font-family: inherit; }
         .quiz-text-input:focus { border-color: var(--accent-primary); }
-        
         .quiz-options label.correct-answer, .quiz-text-input.correct-input { background-color: var(--correct-bg); color: var(--correct-text); border-color: var(--correct-border); }
         .quiz-options label.wrong-answer, .quiz-text-input.wrong-input { background-color: var(--wrong-bg); color: var(--wrong-text); border-color: var(--wrong-border); }
         .text-feedback { margin-top: 0.75rem; padding: 0.75rem; border-radius: 8px; background-color: var(--correct-bg); color: var(--correct-text); border: 1px solid var(--correct-border); display: none; font-weight: 600; }
-        
-        .quiz-submit-btn {
-            display: block; width: 100%; max-width: 400px; margin: 2rem auto; padding: 1rem; background-color: var(--accent-primary); color: white; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); transition: background-color 0.3s;
-        }
+        .quiz-submit-btn { display: block; width: 100%; max-width: 400px; margin: 2rem auto; padding: 1rem; background-color: var(--accent-primary); color: white; border: none; border-radius: 8px; font-size: 1.15rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); transition: background-color 0.3s; }
         .quiz-submit-btn:hover { background-color: var(--accent-hover); }
-        .quiz-score-display {
-            text-align: center; font-size: 1.5rem; font-weight: 800; padding: 1.5rem; border-radius: 12px; background-color: var(--bg-card); border: 2px solid var(--border-color); display: none; margin-top: 1.5rem;
-        }
+        .quiz-score-display { text-align: center; font-size: 1.5rem; font-weight: 800; padding: 1.5rem; border-radius: 12px; background-color: var(--bg-card); border: 2px solid var(--border-color); display: none; margin-top: 1.5rem; }
 
-        /* Sources List */
+        /* Sources List & Links */
         .source-list { list-style: none; display: grid; gap: 1rem; }
-        .source-list li { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); }
-        .source-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; }
-        .source-list h3 { color: var(--text-main); font-size: 1.15rem; }
+        .source-list li { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: transform 0.2s; }
+        .source-list li:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent-primary); }
+        .source-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;}
+        .source-list a { color: var(--accent-primary); font-size: 1.15rem; font-weight: 700; text-decoration: none; }
+        .source-list a:hover { text-decoration: underline; }
         .badge { background-color: var(--border-color); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
         .badge.primary { background-color: rgba(79, 70, 229, 0.1); color: var(--accent-primary); }
         .badge.extra { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
@@ -304,13 +275,13 @@
                 <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
                 <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
             </div>
-            <div class="card-counter" id="card-counter">1 / 22</div>
+            <div class="card-counter" id="card-counter">1 / 24</div>
         </div>
 
         <div id="tab-modules" class="tab-content">
             <div class="section-header">
                 <h2>The Learning Chapters</h2>
-                <p>Everything you need to know, synthesized from all original and extended articles.</p>
+                <p>Everything you need to know, explicitly tagged with the article it came from.</p>
             </div>
             <div class="accordion">
                 <div class="accordion-item">
@@ -320,10 +291,13 @@
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner">
-                            <p><strong>The Normal Flora:</strong> Humans peacefully coexist with trillions of bacteria that live on our skin and in our gut. For example, <em>Staphylococcus aureus</em> is naturally found on 25% of humans. It is normally harmless unless it enters the body through a <strong>wound</strong> (cut/scrape) or an IV line, at which point it becomes a pathogen.</p>
+                            <span class="article-tag">Source: "How common are superbugs in US hospitals?"</span><br>
+                            <span class="article-tag">Source: "What if people use too much antibiotics?"</span>
+                            
+                            <p><strong>The Normal Flora:</strong> Humans peacefully coexist with trillions of bacteria. <em>Staphylococcus aureus</em> is naturally found on 25% of humans. It is normally harmless unless it enters the body through a wound or an IV line, becoming a pathogen.</p>
                             <h4>How Resistance Actually Happens</h4>
                             <p>Bacteria do NOT actively "try" to become resistant. Because many modern antibiotics are derived from natural fungi, bacteria and fungi have been locked in a biological "arms race" for billions of years. As a result, a tiny proportion of bacteria naturally possess genes that make them resistant.</p>
-                            <p>When humans take antibiotics unnecessarily (like for a viral cold), the medicine kills off all the sensitive, harmless bacteria. With the competition completely removed, the naturally resistant bacteria ("Superbugs") are free to multiply and spread rapidly. This is a perfect example of <strong>evolution via natural selection</strong>.</p>
+                            <p>When humans take antibiotics unnecessarily, the medicine kills off all sensitive, harmless bacteria. With the competition completely removed, the naturally resistant bacteria ("Superbugs") are free to multiply and spread rapidly. This is <strong>evolution via natural selection</strong>.</p>
                         </div>
                     </div>
                 </div>
@@ -335,12 +309,11 @@
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner">
-                            <p>Scientists analyzed the National Inpatient Sample database (2010-2014) to track MRSA (Methicillin-resistant <em>Staphylococcus aureus</em>) infections in the United States.</p>
-                            <h4>Key Data Points:</h4>
+                            <span class="article-tag">Source: "How common are superbugs in US hospitals?"</span>
+                            <p>Scientists analyzed the National Inpatient Sample database (2010-2014) to track MRSA (Methicillin-resistant <em>Staphylococcus aureus</em>) infections in the US.</p>
                             <ul>
-                                <li><strong>Mild vs Severe:</strong> While hospitalizations for mild MRSA skin infections (like abscesses) have actually decreased, hospitalizations for <strong>severe MRSA infections</strong> (like pneumonia or sepsis) have remained constant or slightly increased.</li>
-                                <li><strong>Mortality:</strong> MRSA remains the leading cause of death due to antibiotic-resistant infections in the US.</li>
-                                <li><strong>Geography:</strong> Hospitalization rates are significantly highest in the <strong>Southern United States</strong>. This is due to a warmer climate (which helps bacteria survive and multiply on surfaces) and higher rates of antibiotic prescriptions in those states.</li>
+                                <li><strong>Mild vs Severe:</strong> While hospitalizations for mild MRSA skin infections decreased, hospitalizations for <strong>severe MRSA infections</strong> (like pneumonia or sepsis) remained constant or slightly increased.</li>
+                                <li><strong>Geography:</strong> Hospitalization rates are significantly highest in the <strong>Southern United States</strong> due to a warmer climate (which helps bacteria survive on surfaces) and higher rates of antibiotic prescriptions in those states.</li>
                             </ul>
                         </div>
                     </div>
@@ -353,13 +326,13 @@
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner">
-                            <p>Using the metric "Defined Daily Doses" (DDD), researchers mapped global antibiotic usage.</p>
-                            <p>In 2015, global consumption reached <strong>42 billion DDDs</strong>. This represents a massive <strong>65% increase</strong> since the year 2000. The primary driver of this spike was economic growth in low and middle-income countries, which made medications more financially accessible to citizens.</p>
+                            <span class="article-tag">Source: "What if people use too much antibiotics?"</span>
+                            <p>Using the metric "Defined Daily Doses" (DDD), researchers mapped global antibiotic usage. In 2015, global consumption reached <strong>42 billion DDDs</strong> (a 65% increase since 2000). The primary driver was economic growth in low/middle-income countries, making medicine more financially accessible.</p>
                             <h4>The 3 Mathematical Models for 2030:</h4>
                             <ul>
-                                <li><strong>Pessimistic Scenario:</strong> A massive <strong>200% increase</strong> if no new policies are created to curb over-prescription.</li>
-                                <li><strong>Baseline Growth:</strong> A <strong>15% increase</strong> simply driven by standard global population growth.</li>
-                                <li><strong>Optimistic Scenario:</strong> An increase limited to <strong>32%</strong> if aggressive global policies are adopted worldwide.</li>
+                                <li><strong>Pessimistic Scenario:</strong> A <strong>200% increase</strong> if no new policies are created.</li>
+                                <li><strong>Baseline Growth:</strong> A <strong>15% increase</strong> simply driven by global population growth.</li>
+                                <li><strong>Optimistic Scenario:</strong> An increase limited to <strong>32%</strong> if aggressive global policies are adopted.</li>
                             </ul>
                         </div>
                     </div>
@@ -367,19 +340,17 @@
 
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 4: The Economic Threat & Pipeline Crisis (WHO Data)
+                        Chapter 4: The Economic Threat & Pipeline Crisis
                         <span style="transition: transform 0.3s;">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner">
-                            <div class="highlight-box">
-                                Note for Criterion D: Use this section to explain the <em>Economic, Ethical, and Social</em> impacts of applied science.
-                            </div>
-                            <p>According to the World Health Organization (WHO), bacterial AMR was directly responsible for <strong>1.27 million global deaths</strong> in 2019.</p>
+                            <span class="article-tag extra">Source: WHO Fact Sheet on AMR</span>
+                            <p>Bacterial AMR was directly responsible for <strong>1.27 million global deaths</strong> in 2019.</p>
                             <h4>The Trillion Dollar Cost</h4>
-                            <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs. The World Bank estimates that AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
+                            <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs. The World Bank estimates AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
                             <h4>The Pipeline Crisis</h4>
-                            <p>Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration and cure the patient. Ethically and economically, this is a crisis because companies prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
+                            <p>Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration and cure the patient. Companies prefer to prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
                         </div>
                     </div>
                 </div>
@@ -391,22 +362,49 @@
                     </button>
                     <div class="accordion-content">
                         <div class="accordion-inner">
+                            <span class="article-tag extra">Source: CDC MRSA Guidelines</span><br>
+                            <span class="article-tag extra">Source: Science News Explores</span>
                             <h4>Surface Survival (CDC Data)</h4>
-                            <p>The CDC warns that MRSA bacteria are incredibly resilient. MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>.</p>
-                            <h4>Genetic Fingerprinting</h4>
-                            <p>Scientists track superbugs by identifying the mutated parts of their genes (their "genetic fingerprint"). Researchers recently found superbug DNA outside of hospitals in 71 different environmental locations—including seawater, soil, and the exhaust air blowing out of agricultural farm buildings.</p>
+                            <p>Unlike fragile viruses, MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>. This leads to Community-Associated MRSA (CA-MRSA).</p>
+                            <h4>Genetic Fingerprinting (Science News)</h4>
+                            <p>Scientists track superbugs by identifying their "genetic fingerprint." Researchers found superbug DNA outside of hospitals in 71 different environmental locations—including seawater, soil, and agricultural exhaust.</p>
                             <h4>The Post-Antibiotic Era</h4>
-                            <p>Because of widespread environmental contamination, biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to the extreme risk of untreatable infection.</p>
+                            <p>Biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to infection risks.</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chapter 6: Environmental Pollution & Preventive Solutions
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <span class="article-tag extra">Source: UNEP "Bracing for Superbugs" Report</span><br>
+                            <span class="article-tag extra">Source: Mayo Clinic MRSA Guidelines</span>
+                            
+                            <h4>The Environmental Dimension (UNEP)</h4>
+                            <p>The UN Environment Programme (UNEP) report highlights that pollution from pharmaceutical manufacturing, agricultural runoff, and healthcare facilities is a massive driver of AMR. When liquid waste (effluent) containing antibiotics is dumped into rivers, it turns the environment into a breeding ground for superbugs.</p>
+                            
+                            <h4>Prevention & Solutions (Mayo Clinic)</h4>
+                            <p>To prevent Community-Associated MRSA (CA-MRSA), the Mayo Clinic recommends strictly individual hygiene solutions:</p>
+                            <ul>
+                                <li><strong>Wash your hands:</strong> Thoroughly scrubbing with soap and water is the primary defense.</li>
+                                <li><strong>Keep wounds covered:</strong> Cuts and abrasions must be kept clean and covered with dry bandages until healed to block pathogen entry.</li>
+                                <li><strong>Keep personal items personal:</strong> Never share towels, sheets, razors, or athletic equipment.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div id="tab-quiz" class="tab-content">
             <div class="section-header">
                 <h2>Dynamic Mini-Quiz</h2>
-                <p>Test yourself! 10 random questions (MCQ & Typed) are selected from a large pool on every refresh.</p>
+                <p>Test yourself! 10 random questions (MCQ & Typed) are selected from our updated pool on every refresh.</p>
             </div>
             <div id="quiz-form"></div>
             <button class="quiz-submit-btn" onclick="gradeQuiz()">Submit & Grade Answers</button>
@@ -416,32 +414,65 @@
         <div id="tab-refs" class="tab-content">
             <div class="section-header">
                 <h2>Reference Directory</h2>
-                <p>The source materials synthesizing this hub.</p>
+                <p>Click the titles to read the full source materials.</p>
             </div>
             <ul class="source-list">
                 <li>
                     <div class="source-header">
-                        <h3>What if people use too much antibiotics?</h3>
+                        <a href="https://drive.google.com/file/d/1qF0rAZGUMuig5e78UI5kQnJVxNw5fxf9/view" target="_blank">What if people use too much antibiotics?</a>
                         <span class="badge primary">Original Article</span>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al.</em></p>
-                    <p>Global antibiotic consumption data and 2030 mathematical projections.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al. (Aug 2019)</em></p>
+                    <p>Global antibiotic consumption data and mathematical projections modeling consumption rates by 2030.</p>
                 </li>
                 <li>
                     <div class="source-header">
-                        <h3>How common are superbugs in US hospitals?</h3>
+                        <a href="https://drive.google.com/file/d/1exw6AVKVGIcjizMSxO5Omd4VaHhf5hfh/view" target="_blank">How common are superbugs in US hospitals?</a>
                         <span class="badge primary">Original Article</span>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al.</em></p>
-                    <p>National Inpatient Sample database trends of mild vs. severe MRSA.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al. (Sept 2018)</em></p>
+                    <p>Analysis of the National Inpatient Sample database detailing the trends of mild versus severe MRSA infections across US regions.</p>
                 </li>
+                
                 <li>
                     <div class="source-header">
-                        <h3>WHO Fact Sheet: AMR</h3>
+                        <a href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance" target="_blank">WHO Fact Sheet: Antimicrobial Resistance</a>
                         <span class="badge extra">Extended Article</span>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>World Health Organization</em></p>
-                    <p>Data on the $1 trillion economic threat of AMR and pipeline crisis.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>World Health Organization (WHO)</em></p>
+                    <p>Critical data evaluating the $1 trillion economic threat of AMR, the pharmaceutical pipeline crisis, and global mortality rates.</p>
+                </li>
+                <li>
+                    <div class="source-header">
+                        <a href="https://www.cdc.gov/mrsa/index.html" target="_blank">CDC: MRSA Guidelines & Transmission</a>
+                        <span class="badge extra">Extended Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Centers for Disease Control and Prevention</em></p>
+                    <p>Guidance on how Community-Associated MRSA survives on surfaces for extended periods and how the One Health approach combats it.</p>
+                </li>
+                <li>
+                    <div class="source-header">
+                        <a href="https://www.snexplores.org/article/superbugs-silent-health-emergency" target="_blank">Superbugs: A silent health emergency</a>
+                        <span class="badge extra">Extended Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science News Explores</em></p>
+                    <p>An exploration of how biologists track superbug "genetic fingerprints" in soil and agricultural environments.</p>
+                </li>
+                <li>
+                    <div class="source-header">
+                        <a href="https://www.unep.org/resources/superbugs/environmental-dimensions-antimicrobial-resistance" target="_blank">Bracing for Superbugs: Environmental Dimensions of AMR</a>
+                        <span class="badge extra">Extended Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>UN Environment Programme (UNEP)</em></p>
+                    <p>A comprehensive report detailing how pharmaceutical, agricultural, and healthcare pollution (effluent) accelerates superbug emergence.</p>
+                </li>
+                <li>
+                    <div class="source-header">
+                        <a href="https://www.mayoclinic.org/diseases-conditions/mrsa/symptoms-causes/syc-20375336" target="_blank">MRSA Infection - Symptoms and Causes</a>
+                        <span class="badge extra">Extended Article</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Mayo Clinic</em></p>
+                    <p>Practical, everyday solutions for preventing the spread of CA-MRSA, including proper wound care and personal hygiene protocols.</p>
                 </li>
             </ul>
         </div>
@@ -451,19 +482,10 @@
     <script>
         // --- TAB LOGIC ---
         function openTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            // Remove active class from buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            // Show target tab
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            // Add active class to clicked button
             event.currentTarget.classList.add('active');
-            // Scroll to top of container smoothly
             window.scrollTo({ top: document.querySelector('.container').offsetTop - 20, behavior: 'smooth' });
         }
 
@@ -485,7 +507,9 @@
             { term: "Pipeline Crisis", def: "The economic issue where pharmaceutical companies are no longer developing new antibiotics." },
             { term: "CA-MRSA", def: "Community-Associated MRSA; infections in healthy people who have NOT been hospitalized recently." },
             { term: "Genetic Fingerprint", def: "Specific mutated DNA sequences in a bacteria that grant it resistance, which can be tracked." },
-            { term: "Post-Antibiotic Era", def: "A feared future where routine medical procedures become deadly because antibiotics no longer work." }
+            { term: "Post-Antibiotic Era", def: "A feared future where routine medical procedures become deadly because antibiotics no longer work." },
+            { term: "Effluent", def: "Liquid waste or sewage discharged into a river or the sea, often carrying antibiotics from factories/hospitals." },
+            { term: "UNEP", def: "United Nations Environment Programme; monitors the environmental dimensions of AMR." }
         ];
 
         let currentIndex = 0;
@@ -553,29 +577,31 @@
         const quizPool = [
             // MCQ
             { type: 'mcq', q: "What does MRSA specifically stand for?", options: ["Methicillin-resistant Staphylococcus aureus", "Multiple-resistant Streptococcus A", "Methicillin-susceptible Staphylococcus aureus", "Medical-resistant Systemic aureus"], answer: 0 },
-            { type: 'mcq', q: "What was the estimated global antibiotic consumption in 2015?", options: ["12 billion DDDs", "25 billion DDDs", "42 billion DDDs", "65 billion DDDs"], answer: 2 },
+            { type: 'mcq', q: "What was the estimated global antibiotic consumption in 2015 based on the original article data?", options: ["12 billion DDDs", "25 billion DDDs", "42 billion DDDs", "65 billion DDDs"], answer: 2 },
             { type: 'mcq', q: "Which mathematical model scenario predicts a 200% increase in antibiotic consumption by 2030?", options: ["The Optimistic Scenario", "The Baseline Growth Scenario", "The Pipeline Scenario", "The Pessimistic Scenario"], answer: 3 },
-            { type: 'mcq', q: "According to the WHO, how many global deaths was bacterial AMR directly responsible for in 2019?", options: ["500,000", "1.27 million", "5.4 million", "10 million"], answer: 1 },
-            { type: 'mcq', q: "Which region of the US has the highest rates of MRSA hospitalizations?", options: ["Northern US", "Southern US", "Midwest", "West Coast"], answer: 1 },
-            { type: 'mcq', q: "What is the primary driver for the rapid spike in global antibiotic consumption in low and middle-income countries?", options: ["Economic growth making medicine accessible", "New superbug strains", "A drop in global temperatures", "Cessation of hygiene practices"], answer: 0 },
-            { type: 'mcq', q: "What is the 'pipeline crisis' in pharmaceuticals?", options: ["Logistical pipelines are deteriorating", "Companies are no longer investing in creating new antibiotics due to low profitability", "Antibiotics are expiring in transit", "Water pipelines spreading bacteria"], answer: 1 },
-            { type: 'mcq', q: "How long can MRSA survive on environmental surfaces like gym lockers or towels?", options: ["A few seconds", "Up to 5 minutes", "A couple of hours", "Hours, days, or even weeks"], answer: 3 },
+            { type: 'mcq', q: "According to the WHO Fact Sheet, how many global deaths was bacterial AMR directly responsible for in 2019?", options: ["500,000", "1.27 million", "5.4 million", "10 million"], answer: 1 },
+            { type: 'mcq', q: "According to the US Hospital Trends article, which region has the highest rates of MRSA hospitalizations?", options: ["Northern US", "Southern US", "Midwest", "West Coast"], answer: 1 },
+            { type: 'mcq', q: "What is the primary driver for the rapid spike in global antibiotic consumption in low/middle-income countries?", options: ["Economic growth making medicine financially accessible", "New superbug strains", "A drop in global temperatures", "Cessation of hygiene practices"], answer: 0 },
+            { type: 'mcq', q: "What is the 'pipeline crisis' in pharmaceuticals mentioned in the WHO data?", options: ["Logistical pipelines are deteriorating", "Companies are no longer investing in creating new antibiotics due to low profitability", "Antibiotics are expiring in transit", "Water pipelines spreading bacteria"], answer: 1 },
+            { type: 'mcq', q: "According to the CDC, how long can MRSA survive on environmental surfaces like gym lockers or towels?", options: ["A few seconds", "Up to 5 minutes", "A couple of hours", "Hours, days, or even weeks"], answer: 3 },
             { type: 'mcq', q: "What happens biologically when humans take antibiotics inappropriately for a viral cold?", options: ["The virus is killed", "It kills sensitive bacteria, allowing resistant ones to multiply without competition", "The antibiotics become a vaccine", "Nothing happens"], answer: 1 },
-            { type: 'mcq', q: "Where were superbug 'genetic fingerprints' recently discovered outside of clinical settings?", options: ["Space stations", "Volcanic ash", "Soil, seawater, and farm exhaust", "Inside deep-sea fish"], answer: 2 },
-            { type: 'mcq', q: "Why do a small proportion of bacteria naturally possess resistance genes?", options: ["They absorb radiation", "They are locked in an evolutionary arms race with fungi", "They choose to mutate", "Ancient viruses injected them"], answer: 1 },
+            { type: 'mcq', q: "Where were superbug 'genetic fingerprints' recently discovered outside of clinical settings according to Science News?", options: ["Space stations", "Volcanic ash", "Soil, seawater, and agricultural exhaust", "Inside deep-sea fish"], answer: 2 },
+            { type: 'mcq', q: "According to the UNEP report, what environmental factor is a massive driver of AMR?", options: ["Solar radiation", "Pollution and effluent from pharmaceutical manufacturing and agriculture", "Deforestation", "Ozone depletion"], answer: 1 },
+            { type: 'mcq', q: "Which of the following is a Mayo Clinic recommendation for preventing CA-MRSA?", options: ["Taking daily antibiotics just in case", "Sharing towels to build immunity", "Keeping wounds clean and covered until healed", "Avoiding all physical exercise"], answer: 2 },
             // Typed
-            { type: 'text', q: "Fill in the Blank: The World Bank estimates AMR could result in an additional $1 ________ in global healthcare costs by 2050.", accepted: ["trillion", "1 trillion", "one trillion"] },
+            { type: 'text', q: "Fill in the Blank (WHO Data): The World Bank estimates AMR could result in an additional $1 ________ in global healthcare costs by 2050.", accepted: ["trillion", "1 trillion", "one trillion"] },
             { type: 'text', q: "Acronym Check: What does 'DDD' stand for when measuring antibiotic consumption?", accepted: ["defined daily dose"] },
             { type: 'text', q: "Acronym Check: What does 'CA-MRSA' specifically stand for?", accepted: ["community-associated mrsa", "community associated mrsa"] },
             { type: 'text', q: "Short Answer: What medical term describes the body's extreme, life-threatening internal response to an infection?", accepted: ["sepsis"] },
             { type: 'text', q: "Short Answer: What global health organization published the AMR Fact Sheet emphasizing the 1.27 million death toll? (Acronym acceptable)", accepted: ["who", "world health organization"] },
-            { type: 'text', q: "Fill in the Blank: Biologists warn we will enter the '____-antibiotic era', where routine surgeries become deadly.", accepted: ["post", "post-antibiotic"] },
-            { type: 'text', q: "Short Answer: When humans kill off sensitive bacteria leaving only resistant ones, this is an example of what scientific concept?", accepted: ["evolution", "natural selection"] },
-            { type: 'text', q: "Short Answer: What specific type of injury acts as the primary entry point for MRSA bacteria to enter the human body?", accepted: ["wound", "cut", "scrape"] },
-            { type: 'text', q: "Acronym Check: What does 'MSSA' stand for?", accepted: ["methicillin-susceptible staphylococcus aureus", "methicillin susceptible staphylococcus aureus"] },
-            { type: 'text', q: "Fill in the Blank: Because many modern antibiotics are derived from _____, bacteria naturally developed resistance to them millions of years ago.", accepted: ["fungi", "fungus"] },
+            { type: 'text', q: "Fill in the Blank: Biologists warn we will enter the '____-antibiotic era', where routine surgeries become deadly due to infection risk.", accepted: ["post", "post-antibiotic"] },
+            { type: 'text', q: "Short Answer: When humans kill off sensitive bacteria leaving only resistant ones to multiply, this is a perfect example of what scientific concept?", accepted: ["evolution", "natural selection"] },
+            { type: 'text', q: "Short Answer (Mayo Clinic): What specific type of injury acts as the primary entry point for MRSA bacteria to enter the human body?", accepted: ["wound", "cut", "scrape"] },
+            { type: 'text', q: "Acronym Check: What does 'MSSA' stand for? (The counterpart to MRSA that CAN be treated).", accepted: ["methicillin-susceptible staphylococcus aureus", "methicillin susceptible staphylococcus aureus"] },
+            { type: 'text', q: "Fill in the Blank: Because many modern antibiotics are derived from _____, bacteria naturally developed resistance to them millions of years ago in a biological arms race.", accepted: ["fungi", "fungus"] },
             { type: 'text', q: "Short Answer: What severe respiratory infection, causing the air sacs of the lungs to fill with fluid, can be a deadly consequence of MRSA?", accepted: ["pneumonia"] },
-            { type: 'text', q: "Short Answer: What is the casual term used by the media to describe bacteria resistant to multiple antibiotic drugs?", accepted: ["superbug", "superbugs"] }
+            { type: 'text', q: "Short Answer: What is the casual term used to describe bacteria resistant to multiple antibiotic drugs?", accepted: ["superbug", "superbugs"] },
+            { type: 'text', q: "Acronym Check: What does 'UNEP' stand for in the context of environmental AMR tracking?", accepted: ["un environment programme", "united nations environment programme"] }
         ];
 
         let selectedQuestions = [];
@@ -693,7 +719,6 @@
         };
 
         document.addEventListener('keydown', (e) => {
-            // Only use arrow keys for flashcards if the vocab tab is active
             if (document.getElementById('tab-vocab').classList.contains('active')) {
                 if(e.key === 'ArrowRight') nextCard();
                 if(e.key === 'ArrowLeft') prevCard();
