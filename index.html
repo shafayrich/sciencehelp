@@ -33,6 +33,12 @@
             --wrong-bg: #fee2e2;
             --wrong-border: #ef4444;
             --wrong-text: #991b1b;
+            
+            /* Highlight Colors */
+            --highlight-yellow: rgba(250, 204, 21, 0.3);
+            --highlight-green: rgba(34, 197, 94, 0.3);
+            --highlight-blue: rgba(59, 130, 246, 0.3);
+            --highlight-pink: rgba(236, 72, 153, 0.3);
         }
 
         [data-theme="dark"] {
@@ -56,6 +62,11 @@
             --wrong-bg: #7f1d1d;
             --wrong-border: #ef4444;
             --wrong-text: #f87171;
+            
+            --highlight-yellow: rgba(250, 204, 21, 0.2);
+            --highlight-green: rgba(34, 197, 94, 0.2);
+            --highlight-blue: rgba(59, 130, 246, 0.2);
+            --highlight-pink: rgba(236, 72, 153, 0.2);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -112,9 +123,155 @@
 
         /* Container */
         .container {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notes-sidebar {
+            width: 320px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+            box-shadow: var(--shadow-card);
+        }
+
+        .notes-sidebar h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+            font-size: 1.25rem;
+        }
+
+        .notes-sidebar textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .notes-sidebar textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .notes-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .notes-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .notes-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .notes-btn.secondary {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .notes-btn.secondary:hover {
+            background: var(--border-color);
+        }
+
+        .highlight-tools {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .highlight-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .highlight-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .highlight-btn.yellow { background: var(--highlight-yellow); border-color: #facc15; }
+        .highlight-btn.green { background: var(--highlight-green); border-color: #22c55e; }
+        .highlight-btn.blue { background: var(--highlight-blue); border-color: #3b82f6; }
+        .highlight-btn.pink { background: var(--highlight-pink); border-color: #ec4899; }
+        .highlight-btn.clear { 
+            background: var(--bg-card); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .highlighted-notes-list {
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .highlighted-note-item {
+            padding: 0.75rem;
+            background: var(--bg-input);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .highlighted-note-item:hover {
+            transform: translateX(5px);
+        }
+
+        .highlighted-note-item .note-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .highlighted-note-item .note-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            display: flex;
+            justify-content: space-between;
         }
 
         /* Tab Navigation */
@@ -159,6 +316,44 @@
         .section-header { margin-bottom: 1.5rem; text-align: center; }
         .section-header h2 { font-size: 1.8rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 0.25rem; }
         .section-header p { color: var(--text-muted); font-size: 1rem; }
+
+        /* Highlightable Text */
+        .highlightable {
+            cursor: pointer;
+            transition: background-color 0.2s;
+            padding: 0 2px;
+            border-radius: 3px;
+        }
+
+        .highlightable:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        .highlight-yellow { background-color: var(--highlight-yellow); }
+        .highlight-green { background-color: var(--highlight-green); }
+        .highlight-blue { background-color: var(--highlight-blue); }
+        .highlight-pink { background-color: var(--highlight-pink); }
+
+        /* Selection Tooltip */
+        .selection-tooltip {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            box-shadow: var(--shadow-card);
+            display: none;
+            z-index: 1000;
+        }
+
+        .selection-tooltip button {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin: 0 2px;
+            cursor: pointer;
+        }
 
         /* Flashcards */
         .flashcard-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
@@ -230,6 +425,16 @@
         .badge.primary { background-color: rgba(79, 70, 229, 0.1); color: var(--accent-primary); }
         .badge.extra { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
 
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            .notes-sidebar {
+                width: 100%;
+                position: static;
+            }
+        }
+
         @media (max-width: 768px) {
             header h1 { font-size: 1.8rem; }
             .theme-toggle { position: static; margin-top: 1rem; display: inline-block; }
@@ -253,243 +458,512 @@
     </header>
 
     <div class="container">
-        
-        <nav class="tabs-nav">
-            <button class="tab-btn active" onclick="openTab('tab-vocab')">🗂️ Vocabulary</button>
-            <button class="tab-btn" onclick="openTab('tab-modules')">📖 Study Modules</button>
-            <button class="tab-btn" onclick="openTab('tab-quiz')">📝 Mini-Quiz</button>
-            <button class="tab-btn" onclick="openTab('tab-refs')">📚 References</button>
-        </nav>
+        <div class="main-content">
+            <nav class="tabs-nav">
+                <button class="tab-btn active" onclick="openTab('tab-vocab')">🗂️ Vocabulary</button>
+                <button class="tab-btn" onclick="openTab('tab-modules')">📖 Study Modules</button>
+                <button class="tab-btn" onclick="openTab('tab-quiz')">📝 Mini-Quiz</button>
+                <button class="tab-btn" onclick="openTab('tab-refs')">📚 References</button>
+            </nav>
 
-        <div id="tab-vocab" class="tab-content active">
-            <div class="section-header">
-                <h2>Vocabulary Drill</h2>
-                <p>Master the exact scientific definitions required for your test.</p>
+            <div id="tab-vocab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Vocabulary Drill</h2>
+                    <p>Master the exact scientific definitions required for your test.</p>
+                </div>
+                <div class="flashcard-container">
+                    <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
+                    <div class="cards-wrapper" id="cards-wrapper"></div>
+                    <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
+                </div>
+                <div class="mobile-nav">
+                    <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
+                    <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
+                </div>
+                <div class="card-counter" id="card-counter">1 / 24</div>
             </div>
-            <div class="flashcard-container">
-                <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
-                <div class="cards-wrapper" id="cards-wrapper"></div>
-                <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
+
+            <div id="tab-modules" class="tab-content">
+                <div class="section-header">
+                    <h2>The Learning Chapters</h2>
+                    <p>Select text to highlight important information. Click highlighted text to add notes.</p>
+                </div>
+                <div class="accordion" id="study-modules">
+                    <!-- Chapters will be dynamically populated -->
+                </div>
             </div>
-            <div class="mobile-nav">
-                <button class="nav-arrow" onclick="prevCard()">&#8592;</button>
-                <button class="nav-arrow" onclick="nextCard()">&#8594;</button>
+
+            <div id="tab-quiz" class="tab-content">
+                <div class="section-header">
+                    <h2>Dynamic Mini-Quiz</h2>
+                    <p>Test yourself! 10 random questions (MCQ & Typed) are selected from our updated pool on every refresh.</p>
+                </div>
+                <div id="quiz-form"></div>
+                <button class="quiz-submit-btn" onclick="gradeQuiz()">Submit & Grade Answers</button>
+                <div class="quiz-score-display" id="quiz-score"></div>
             </div>
-            <div class="card-counter" id="card-counter">1 / 24</div>
-        </div>
 
-        <div id="tab-modules" class="tab-content">
-            <div class="section-header">
-                <h2>The Learning Chapters</h2>
-                <p>Everything you need to know, explicitly tagged with the article it came from.</p>
-            </div>
-            <div class="accordion">
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 1: The Biology of Superbugs & The Arms Race
-                        <span style="transition: transform 0.3s;">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <div class="accordion-inner">
-                            <span class="article-tag">Source: "How common are superbugs in US hospitals?"</span><br>
-                            <span class="article-tag">Source: "What if people use too much antibiotics?"</span>
-                            
-                            <p><strong>The Normal Flora:</strong> Humans peacefully coexist with trillions of bacteria. <em>Staphylococcus aureus</em> is naturally found on 25% of humans. It is normally harmless unless it enters the body through a wound or an IV line, becoming a pathogen.</p>
-                            <h4>How Resistance Actually Happens</h4>
-                            <p>Bacteria do NOT actively "try" to become resistant. Because many modern antibiotics are derived from natural fungi, bacteria and fungi have been locked in a biological "arms race" for billions of years. As a result, a tiny proportion of bacteria naturally possess genes that make them resistant.</p>
-                            <p>When humans take antibiotics unnecessarily, the medicine kills off all sensitive, harmless bacteria. With the competition completely removed, the naturally resistant bacteria ("Superbugs") are free to multiply and spread rapidly. This is <strong>evolution via natural selection</strong>.</p>
-                        </div>
-                    </div>
+            <div id="tab-refs" class="tab-content">
+                <div class="section-header">
+                    <h2>Reference Directory</h2>
+                    <p>Click the titles to read the full source materials.</p>
                 </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 2: US Hospital Trends & MRSA Statistics
-                        <span style="transition: transform 0.3s;">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <div class="accordion-inner">
-                            <span class="article-tag">Source: "How common are superbugs in US hospitals?"</span>
-                            <p>Scientists analyzed the National Inpatient Sample database (2010-2014) to track MRSA (Methicillin-resistant <em>Staphylococcus aureus</em>) infections in the US.</p>
-                            <ul>
-                                <li><strong>Mild vs Severe:</strong> While hospitalizations for mild MRSA skin infections decreased, hospitalizations for <strong>severe MRSA infections</strong> (like pneumonia or sepsis) remained constant or slightly increased.</li>
-                                <li><strong>Geography:</strong> Hospitalization rates are significantly highest in the <strong>Southern United States</strong> due to a warmer climate (which helps bacteria survive on surfaces) and higher rates of antibiotic prescriptions in those states.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 3: Global Consumption & 2030 Projections
-                        <span style="transition: transform 0.3s;">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <div class="accordion-inner">
-                            <span class="article-tag">Source: "What if people use too much antibiotics?"</span>
-                            <p>Using the metric "Defined Daily Doses" (DDD), researchers mapped global antibiotic usage. In 2015, global consumption reached <strong>42 billion DDDs</strong> (a 65% increase since 2000). The primary driver was economic growth in low/middle-income countries, making medicine more financially accessible.</p>
-                            <h4>The 3 Mathematical Models for 2030:</h4>
-                            <ul>
-                                <li><strong>Pessimistic Scenario:</strong> A <strong>200% increase</strong> if no new policies are created.</li>
-                                <li><strong>Baseline Growth:</strong> A <strong>15% increase</strong> simply driven by global population growth.</li>
-                                <li><strong>Optimistic Scenario:</strong> An increase limited to <strong>32%</strong> if aggressive global policies are adopted.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 4: The Economic Threat & Pipeline Crisis
-                        <span style="transition: transform 0.3s;">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <div class="accordion-inner">
-                            <span class="article-tag extra">Source: WHO Fact Sheet on AMR</span>
-                            <p>Bacterial AMR was directly responsible for <strong>1.27 million global deaths</strong> in 2019.</p>
-                            <h4>The Trillion Dollar Cost</h4>
-                            <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs. The World Bank estimates AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
-                            <h4>The Pipeline Crisis</h4>
-                            <p>Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration and cure the patient. Companies prefer to prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 5: Transmission, DNA Tracking, & The Post-Antibiotic Era
-                        <span style="transition: transform 0.3s;">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <div class="accordion-inner">
-                            <span class="article-tag extra">Source: CDC MRSA Guidelines</span><br>
-                            <span class="article-tag extra">Source: Science News Explores</span>
-                            <h4>Surface Survival (CDC Data)</h4>
-                            <p>Unlike fragile viruses, MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>. This leads to Community-Associated MRSA (CA-MRSA).</p>
-                            <h4>Genetic Fingerprinting (Science News)</h4>
-                            <p>Scientists track superbugs by identifying their "genetic fingerprint." Researchers found superbug DNA outside of hospitals in 71 different environmental locations—including seawater, soil, and agricultural exhaust.</p>
-                            <h4>The Post-Antibiotic Era</h4>
-                            <p>Biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to infection risks.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        Chapter 6: Environmental Pollution & Preventive Solutions
-                        <span style="transition: transform 0.3s;">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <div class="accordion-inner">
-                            <span class="article-tag extra">Source: UNEP "Bracing for Superbugs" Report</span><br>
-                            <span class="article-tag extra">Source: Mayo Clinic MRSA Guidelines</span>
-                            
-                            <h4>The Environmental Dimension (UNEP)</h4>
-                            <p>The UN Environment Programme (UNEP) report highlights that pollution from pharmaceutical manufacturing, agricultural runoff, and healthcare facilities is a massive driver of AMR. When liquid waste (effluent) containing antibiotics is dumped into rivers, it turns the environment into a breeding ground for superbugs.</p>
-                            
-                            <h4>Prevention & Solutions (Mayo Clinic)</h4>
-                            <p>To prevent Community-Associated MRSA (CA-MRSA), the Mayo Clinic recommends strictly individual hygiene solutions:</p>
-                            <ul>
-                                <li><strong>Wash your hands:</strong> Thoroughly scrubbing with soap and water is the primary defense.</li>
-                                <li><strong>Keep wounds covered:</strong> Cuts and abrasions must be kept clean and covered with dry bandages until healed to block pathogen entry.</li>
-                                <li><strong>Keep personal items personal:</strong> Never share towels, sheets, razors, or athletic equipment.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
+                <ul class="source-list" id="source-list"></ul>
             </div>
         </div>
 
-        <div id="tab-quiz" class="tab-content">
-            <div class="section-header">
-                <h2>Dynamic Mini-Quiz</h2>
-                <p>Test yourself! 10 random questions (MCQ & Typed) are selected from our updated pool on every refresh.</p>
+        <!-- Notes Sidebar -->
+        <div class="notes-sidebar">
+            <h3>
+                <span>📝</span>
+                <span>Study Notes</span>
+            </h3>
+            
+            <div class="highlight-tools">
+                <button class="highlight-btn yellow" onclick="setHighlightColor('yellow')" title="Yellow Highlight"></button>
+                <button class="highlight-btn green" onclick="setHighlightColor('green')" title="Green Highlight"></button>
+                <button class="highlight-btn blue" onclick="setHighlightColor('blue')" title="Blue Highlight"></button>
+                <button class="highlight-btn pink" onclick="setHighlightColor('pink')" title="Pink Highlight"></button>
+                <button class="highlight-btn clear" onclick="clearHighlights()" title="Clear All Highlights">🗑️</button>
             </div>
-            <div id="quiz-form"></div>
-            <button class="quiz-submit-btn" onclick="gradeQuiz()">Submit & Grade Answers</button>
-            <div class="quiz-score-display" id="quiz-score"></div>
-        </div>
 
-        <div id="tab-refs" class="tab-content">
-            <div class="section-header">
-                <h2>Reference Directory</h2>
-                <p>Click the titles to read the full source materials.</p>
+            <textarea id="notes-textarea" placeholder="Write your study notes here... 
+Or click on highlighted text to add specific notes."></textarea>
+            
+            <div class="notes-actions">
+                <button class="notes-btn" onclick="saveNotes()">💾 Save Notes</button>
+                <button class="notes-btn secondary" onclick="exportNotes()">📤 Export</button>
             </div>
-            <ul class="source-list">
-                <li>
-                    <div class="source-header">
-                        <a href="https://drive.google.com/file/d/1qF0rAZGUMuig5e78UI5kQnJVxNw5fxf9/view" target="_blank">What if people use too much antibiotics?</a>
-                        <span class="badge primary">Original Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al. (Aug 2019)</em></p>
-                    <p>Global antibiotic consumption data and mathematical projections modeling consumption rates by 2030.</p>
-                </li>
-                <li>
-                    <div class="source-header">
-                        <a href="https://drive.google.com/file/d/1exw6AVKVGIcjizMSxO5Omd4VaHhf5hfh/view" target="_blank">How common are superbugs in US hospitals?</a>
-                        <span class="badge primary">Original Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science Journal for Teens • Klein, E. et al. (Sept 2018)</em></p>
-                    <p>Analysis of the National Inpatient Sample database detailing the trends of mild versus severe MRSA infections across US regions.</p>
-                </li>
-                
-                <li>
-                    <div class="source-header">
-                        <a href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance" target="_blank">WHO Fact Sheet: Antimicrobial Resistance</a>
-                        <span class="badge extra">Extended Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>World Health Organization (WHO)</em></p>
-                    <p>Critical data evaluating the $1 trillion economic threat of AMR, the pharmaceutical pipeline crisis, and global mortality rates.</p>
-                </li>
-                <li>
-                    <div class="source-header">
-                        <a href="https://www.cdc.gov/mrsa/index.html" target="_blank">CDC: MRSA Guidelines & Transmission</a>
-                        <span class="badge extra">Extended Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Centers for Disease Control and Prevention</em></p>
-                    <p>Guidance on how Community-Associated MRSA survives on surfaces for extended periods and how the One Health approach combats it.</p>
-                </li>
-                <li>
-                    <div class="source-header">
-                        <a href="https://www.snexplores.org/article/superbugs-silent-health-emergency" target="_blank">Superbugs: A silent health emergency</a>
-                        <span class="badge extra">Extended Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Science News Explores</em></p>
-                    <p>An exploration of how biologists track superbug "genetic fingerprints" in soil and agricultural environments.</p>
-                </li>
-                <li>
-                    <div class="source-header">
-                        <a href="https://www.unep.org/resources/superbugs/environmental-dimensions-antimicrobial-resistance" target="_blank">Bracing for Superbugs: Environmental Dimensions of AMR</a>
-                        <span class="badge extra">Extended Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>UN Environment Programme (UNEP)</em></p>
-                    <p>A comprehensive report detailing how pharmaceutical, agricultural, and healthcare pollution (effluent) accelerates superbug emergence.</p>
-                </li>
-                <li>
-                    <div class="source-header">
-                        <a href="https://www.mayoclinic.org/diseases-conditions/mrsa/symptoms-causes/syc-20375336" target="_blank">MRSA Infection - Symptoms and Causes</a>
-                        <span class="badge extra">Extended Article</span>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>Mayo Clinic</em></p>
-                    <p>Practical, everyday solutions for preventing the spread of CA-MRSA, including proper wound care and personal hygiene protocols.</p>
-                </li>
-            </ul>
+
+            <div style="margin-top: 1rem;">
+                <h4 style="color: var(--text-muted); margin-bottom: 0.5rem; font-size: 0.9rem;">Highlighted Sections</h4>
+                <div class="highlighted-notes-list" id="highlighted-notes-list"></div>
+            </div>
         </div>
-        
+    </div>
+
+    <!-- Selection Tooltip -->
+    <div class="selection-tooltip" id="selection-tooltip">
+        <button class="highlight-btn yellow" onclick="highlightSelection('yellow')"></button>
+        <button class="highlight-btn green" onclick="highlightSelection('green')"></button>
+        <button class="highlight-btn blue" onclick="highlightSelection('blue')"></button>
+        <button class="highlight-btn pink" onclick="highlightSelection('pink')"></button>
     </div>
 
     <script>
+        // --- GLOBAL VARIABLES ---
+        let currentHighlightColor = 'yellow';
+        let highlights = JSON.parse(localStorage.getItem('studyHighlights') || '[]');
+        let globalNotes = localStorage.getItem('studyNotes') || '';
+
+        // --- CHAPTER DATA ---
+        const chapters = [
+            {
+                title: "Chapter 1: The Biology of Superbugs & The Arms Race",
+                sources: ['Source: "How common are superbugs in US hospitals?"', 'Source: "What if people use too much antibiotics?"'],
+                content: `
+                    <p><strong>The Normal Flora:</strong> Humans peacefully coexist with trillions of bacteria. <em>Staphylococcus aureus</em> is naturally found on 25% of humans. It is normally harmless unless it enters the body through a wound or an IV line, becoming a pathogen.</p>
+                    <h4>How Resistance Actually Happens</h4>
+                    <p>Bacteria do NOT actively "try" to become resistant. Because many modern antibiotics are derived from natural fungi, bacteria and fungi have been locked in a biological "arms race" for billions of years. As a result, a tiny proportion of bacteria naturally possess genes that make them resistant.</p>
+                    <p>When humans take antibiotics unnecessarily, the medicine kills off all sensitive, harmless bacteria. With the competition completely removed, the naturally resistant bacteria ("Superbugs") are free to multiply and spread rapidly. This is <strong>evolution via natural selection</strong>.</p>
+                `
+            },
+            {
+                title: "Chapter 2: US Hospital Trends & MRSA Statistics",
+                sources: ['Source: "How common are superbugs in US hospitals?"'],
+                content: `
+                    <p>Scientists analyzed the National Inpatient Sample database (2010-2014) to track MRSA (Methicillin-resistant <em>Staphylococcus aureus</em>) infections in the US.</p>
+                    <ul>
+                        <li><strong>Mild vs Severe:</strong> While hospitalizations for mild MRSA skin infections decreased, hospitalizations for <strong>severe MRSA infections</strong> (like pneumonia or sepsis) remained constant or slightly increased.</li>
+                        <li><strong>Geography:</strong> Hospitalization rates are significantly highest in the <strong>Southern United States</strong> due to a warmer climate (which helps bacteria survive on surfaces) and higher rates of antibiotic prescriptions in those states.</li>
+                    </ul>
+                `
+            },
+            {
+                title: "Chapter 3: Global Consumption & 2030 Projections",
+                sources: ['Source: "What if people use too much antibiotics?"'],
+                content: `
+                    <p>Using the metric "Defined Daily Doses" (DDD), researchers mapped global antibiotic usage. In 2015, global consumption reached <strong>42 billion DDDs</strong> (a 65% increase since 2000). The primary driver was economic growth in low/middle-income countries, making medicine more financially accessible.</p>
+                    <h4>The 3 Mathematical Models for 2030:</h4>
+                    <ul>
+                        <li><strong>Pessimistic Scenario:</strong> A <strong>200% increase</strong> if no new policies are created.</li>
+                        <li><strong>Baseline Growth:</strong> A <strong>15% increase</strong> simply driven by global population growth.</li>
+                        <li><strong>Optimistic Scenario:</strong> An increase limited to <strong>32%</strong> if aggressive global policies are adopted.</li>
+                    </ul>
+                `
+            },
+            {
+                title: "Chapter 4: The Economic Threat & Pipeline Crisis",
+                sources: ['Source: WHO Fact Sheet on AMR'],
+                content: `
+                    <p>Bacterial AMR was directly responsible for <strong>1.27 million global deaths</strong> in 2019.</p>
+                    <h4>The Trillion Dollar Cost</h4>
+                    <p>When normal antibiotics fail, doctors must use expensive "last-resort" drugs. The World Bank estimates AMR could result in <strong>$1 trillion in additional global healthcare costs by 2050</strong>.</p>
+                    <h4>The Pipeline Crisis</h4>
+                    <p>Pharmaceutical companies are experiencing a "pipeline crisis." They are no longer investing in researching new antibiotics because antibiotics are taken for a short duration and cure the patient. Companies prefer to prioritize highly profitable drugs that people must take every day for chronic illnesses.</p>
+                `
+            },
+            {
+                title: "Chapter 5: Transmission, DNA Tracking, & The Post-Antibiotic Era",
+                sources: ['Source: CDC MRSA Guidelines', 'Source: Science News Explores'],
+                content: `
+                    <h4>Surface Survival (CDC Data)</h4>
+                    <p>Unlike fragile viruses, MRSA can survive on environmental surfaces (like gym equipment, lockers, and towels) for <strong>hours, days, or even weeks</strong>. This leads to Community-Associated MRSA (CA-MRSA).</p>
+                    <h4>Genetic Fingerprinting (Science News)</h4>
+                    <p>Scientists track superbugs by identifying their "genetic fingerprint." Researchers found superbug DNA outside of hospitals in 71 different environmental locations—including seawater, soil, and agricultural exhaust.</p>
+                    <h4>The Post-Antibiotic Era</h4>
+                    <p>Biologists warn we are approaching the <strong>"post-antibiotic era."</strong> If we reach this point, routine medical procedures like C-sections, hip replacements, and cancer chemotherapy will become too deadly to perform due to infection risks.</p>
+                `
+            },
+            {
+                title: "Chapter 6: Environmental Pollution & Preventive Solutions",
+                sources: ['Source: UNEP "Bracing for Superbugs" Report', 'Source: Mayo Clinic MRSA Guidelines'],
+                content: `
+                    <h4>The Environmental Dimension (UNEP)</h4>
+                    <p>The UN Environment Programme (UNEP) report highlights that pollution from pharmaceutical manufacturing, agricultural runoff, and healthcare facilities is a massive driver of AMR. When liquid waste (effluent) containing antibiotics is dumped into rivers, it turns the environment into a breeding ground for superbugs.</p>
+                    <h4>Prevention & Solutions (Mayo Clinic)</h4>
+                    <p>To prevent Community-Associated MRSA (CA-MRSA), the Mayo Clinic recommends strictly individual hygiene solutions:</p>
+                    <ul>
+                        <li><strong>Wash your hands:</strong> Thoroughly scrubbing with soap and water is the primary defense.</li>
+                        <li><strong>Keep wounds covered:</strong> Cuts and abrasions must be kept clean and covered with dry bandages until healed to block pathogen entry.</li>
+                        <li><strong>Keep personal items personal:</strong> Never share towels, sheets, razors, or athletic equipment.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        // --- SOURCES DATA ---
+        const sources = [
+            {
+                title: "What if people use too much antibiotics?",
+                url: "https://drive.google.com/file/d/1qF0rAZGUMuig5e78UI5kQnJVxNw5fxf9/view",
+                badge: "Original Article",
+                badgeClass: "primary",
+                citation: "Science Journal for Teens • Klein, E. et al. (Aug 2019)",
+                description: "Global antibiotic consumption data and mathematical projections modeling consumption rates by 2030."
+            },
+            {
+                title: "How common are superbugs in US hospitals?",
+                url: "https://drive.google.com/file/d/1exw6AVKVGIcjizMSxO5Omd4VaHhf5hfh/view",
+                badge: "Original Article",
+                badgeClass: "primary",
+                citation: "Science Journal for Teens • Klein, E. et al. (Sept 2018)",
+                description: "Analysis of the National Inpatient Sample database detailing the trends of mild versus severe MRSA infections across US regions."
+            },
+            {
+                title: "WHO Fact Sheet: Antimicrobial Resistance",
+                url: "https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance",
+                badge: "Extended Article",
+                badgeClass: "extra",
+                citation: "World Health Organization (WHO)",
+                description: "Critical data evaluating the $1 trillion economic threat of AMR, the pharmaceutical pipeline crisis, and global mortality rates."
+            },
+            {
+                title: "CDC: MRSA Guidelines & Transmission",
+                url: "https://www.cdc.gov/mrsa/index.html",
+                badge: "Extended Article",
+                badgeClass: "extra",
+                citation: "Centers for Disease Control and Prevention",
+                description: "Guidance on how Community-Associated MRSA survives on surfaces for extended periods and how the One Health approach combats it."
+            },
+            {
+                title: "Superbugs: A silent health emergency",
+                url: "https://www.snexplores.org/article/superbugs-silent-health-emergency",
+                badge: "Extended Article",
+                badgeClass: "extra",
+                citation: "Science News Explores",
+                description: "An exploration of how biologists track superbug 'genetic fingerprints' in soil and agricultural environments."
+            },
+            {
+                title: "Bracing for Superbugs: Environmental Dimensions of AMR",
+                url: "https://www.unep.org/resources/superbugs/environmental-dimensions-antimicrobial-resistance",
+                badge: "Extended Article",
+                badgeClass: "extra",
+                citation: "UN Environment Programme (UNEP)",
+                description: "A comprehensive report detailing how pharmaceutical, agricultural, and healthcare pollution (effluent) accelerates superbug emergence."
+            },
+            {
+                title: "MRSA Infection - Symptoms and Causes",
+                url: "https://www.mayoclinic.org/diseases-conditions/mrsa/symptoms-causes/syc-20375336",
+                badge: "Extended Article",
+                badgeClass: "extra",
+                citation: "Mayo Clinic",
+                description: "Practical, everyday solutions for preventing the spread of CA-MRSA, including proper wound care and personal hygiene protocols."
+            }
+        ];
+
+        // --- INITIALIZATION ---
+        function initializeModules() {
+            const modulesContainer = document.getElementById('study-modules');
+            modulesContainer.innerHTML = '';
+            
+            chapters.forEach((chapter, index) => {
+                const sourcesHtml = chapter.sources.map(src => 
+                    `<span class="article-tag ${src.includes('WHO') || src.includes('CDC') || src.includes('UNEP') || src.includes('Mayo') ? 'extra' : ''}">${src}</span>`
+                ).join('<br>');
+                
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item';
+                accordionItem.innerHTML = `
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        ${chapter.title}
+                        <span style="transition: transform 0.3s;">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner" data-chapter="${index}">
+                            ${sourcesHtml}
+                            ${chapter.content}
+                        </div>
+                    </div>
+                `;
+                modulesContainer.appendChild(accordionItem);
+            });
+            
+            makeTextHighlightable();
+            restoreHighlights();
+        }
+
+        function initializeSources() {
+            const sourceList = document.getElementById('source-list');
+            sourceList.innerHTML = '';
+            
+            sources.forEach(source => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="source-header">
+                        <a href="${source.url}" target="_blank">${source.title}</a>
+                        <span class="badge ${source.badgeClass}">${source.badge}</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"><em>${source.citation}</em></p>
+                    <p>${source.description}</p>
+                `;
+                sourceList.appendChild(li);
+            });
+        }
+
+        // --- TEXT HIGHLIGHTING FUNCTIONS ---
+        function makeTextHighlightable() {
+            const textElements = document.querySelectorAll('.accordion-inner p, .accordion-inner li, .accordion-inner h4');
+            
+            textElements.forEach(element => {
+                if (!element.classList.contains('highlightable')) {
+                    element.classList.add('highlightable');
+                }
+            });
+        }
+
+        function setHighlightColor(color) {
+            currentHighlightColor = color;
+            alert(`Highlight color set to ${color}. Select text to highlight.`);
+        }
+
+        function highlightSelection(color) {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            
+            const range = selection.getRangeAt(0);
+            const selectedText = range.toString().trim();
+            
+            if (selectedText) {
+                const span = document.createElement('span');
+                span.className = `highlight-${color}`;
+                span.setAttribute('data-highlight-id', Date.now());
+                span.setAttribute('data-highlight-color', color);
+                
+                try {
+                    range.surroundContents(span);
+                    
+                    // Save highlight
+                    const highlightData = {
+                        id: span.getAttribute('data-highlight-id'),
+                        text: selectedText,
+                        color: color,
+                        chapter: findChapterIndex(span),
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    highlights.push(highlightData);
+                    saveHighlights();
+                    updateHighlightedNotesList();
+                    
+                    // Add click handler for notes
+                    span.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addNoteToHighlight(span);
+                    });
+                } catch (e) {
+                    console.log('Could not highlight selection');
+                }
+            }
+            
+            selection.removeAllRanges();
+            hideTooltip();
+        }
+
+        function findChapterIndex(element) {
+            const accordionInner = element.closest('.accordion-inner');
+            return accordionInner ? accordionInner.getAttribute('data-chapter') : null;
+        }
+
+        function addNoteToHighlight(highlightElement) {
+            const highlightId = highlightElement.getAttribute('data-highlight-id');
+            const highlight = highlights.find(h => h.id === highlightId);
+            
+            if (highlight) {
+                const note = prompt('Add a note for this highlighted text:', highlight.note || '');
+                if (note !== null) {
+                    highlight.note = note;
+                    saveHighlights();
+                    updateHighlightedNotesList();
+                }
+            }
+        }
+
+        function restoreHighlights() {
+            highlights.forEach(highlight => {
+                const elements = document.querySelectorAll('.accordion-inner');
+                elements.forEach(element => {
+                    const text = element.innerHTML;
+                    if (text.includes(highlight.text)) {
+                        const regex = new RegExp(`(${highlight.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g');
+                        element.innerHTML = element.innerHTML.replace(regex, 
+                            `<span class="highlight-${highlight.color}" data-highlight-id="${highlight.id}" data-highlight-color="${highlight.color}">$1</span>`
+                        );
+                    }
+                });
+            });
+            
+            // Re-attach click handlers
+            document.querySelectorAll('[data-highlight-id]').forEach(span => {
+                span.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    addNoteToHighlight(span);
+                });
+            });
+        }
+
+        function clearHighlights() {
+            if (confirm('Clear all highlights? This cannot be undone.')) {
+                document.querySelectorAll('[data-highlight-id]').forEach(span => {
+                    const parent = span.parentNode;
+                    parent.replaceChild(document.createTextNode(span.textContent), span);
+                    parent.normalize();
+                });
+                
+                highlights = [];
+                saveHighlights();
+                updateHighlightedNotesList();
+            }
+        }
+
+        function saveHighlights() {
+            localStorage.setItem('studyHighlights', JSON.stringify(highlights));
+        }
+
+        function updateHighlightedNotesList() {
+            const listContainer = document.getElementById('highlighted-notes-list');
+            listContainer.innerHTML = '';
+            
+            const notesWithHighlights = highlights.filter(h => h.note);
+            
+            if (notesWithHighlights.length === 0) {
+                listContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No notes yet. Click on highlighted text to add notes.</p>';
+                return;
+            }
+            
+            notesWithHighlights.forEach(highlight => {
+                const item = document.createElement('div');
+                item.className = 'highlighted-note-item';
+                item.style.borderLeftColor = `var(--highlight-${highlight.color})`;
+                item.innerHTML = `
+                    <div class="note-text">${highlight.note}</div>
+                    <div class="note-meta">
+                        <span>${highlight.text.substring(0, 30)}...</span>
+                        <span>${new Date(highlight.timestamp).toLocaleDateString()}</span>
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    const element = document.querySelector(`[data-highlight-id="${highlight.id}"]`);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        element.style.transition = 'box-shadow 0.3s';
+                        element.style.boxShadow = '0 0 0 3px var(--accent-primary)';
+                        setTimeout(() => element.style.boxShadow = '', 2000);
+                    }
+                });
+                
+                listContainer.appendChild(item);
+            });
+        }
+
+        // --- NOTES FUNCTIONS ---
+        function saveNotes() {
+            const notesTextarea = document.getElementById('notes-textarea');
+            globalNotes = notesTextarea.value;
+            localStorage.setItem('studyNotes', globalNotes);
+            alert('Notes saved successfully!');
+        }
+
+        function exportNotes() {
+            const exportData = {
+                notes: globalNotes,
+                highlights: highlights,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `study-notes-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // --- SELECTION TOOLTIP ---
+        let tooltip = document.getElementById('selection-tooltip');
+        let hideTimeout;
+
+        document.addEventListener('mouseup', (e) => {
+            const selection = window.getSelection();
+            const selectedText = selection.toString().trim();
+            
+            if (selectedText && e.target.closest('.accordion-inner')) {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                tooltip.style.display = 'block';
+                tooltip.style.left = `${rect.left + rect.width / 2 - 70}px`;
+                tooltip.style.top = `${rect.bottom + 10 + window.scrollY}px`;
+            } else {
+                hideTooltip();
+            }
+        });
+
+        function hideTooltip() {
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => {
+                tooltip.style.display = 'none';
+            }, 200);
+        }
+
+        tooltip.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+        tooltip.addEventListener('mouseleave', hideTooltip);
+
         // --- TAB LOGIC ---
         function openTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
-            window.scrollTo({ top: document.querySelector('.container').offsetTop - 20, behavior: 'smooth' });
+            
+            if (tabId === 'tab-modules') {
+                setTimeout(makeTextHighlightable, 100);
+            }
         }
 
-        // --- 1. FLASHCARD LOGIC ---
+        // --- FLASHCARD LOGIC (kept the same) ---
         const vocabData = [
             { term: "Antibiotics", def: "Medicines that inhibit the growth of or destroy microorganisms/bacteria." },
             { term: "Antibiotic Resistance", def: "When bacteria evolve to resist the effects of an antibiotic they were once sensitive to." },
@@ -540,9 +1014,6 @@
             if (direction === 'next') {
                 const prevIndex = currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
                 cards[prevIndex].classList.add('prev');
-            } else if (direction === 'prev') {
-                cards[currentIndex].style.transform = "translateX(-40px) scale(0.95)";
-                setTimeout(() => cards[currentIndex].style.transform = "", 50);
             }
             updateCounter();
         }
@@ -551,7 +1022,7 @@
         function prevCard() { currentIndex = (currentIndex - 1 + vocabData.length) % vocabData.length; updateSlider('prev'); }
         function updateCounter() { counterEl.textContent = `${currentIndex + 1} / ${vocabData.length}`; }
 
-        // --- 2. ACCORDION & THEME ---
+        // --- ACCORDION & THEME ---
         function toggleAccordion(button) {
             const item = button.parentElement;
             const content = item.querySelector('.accordion-content');
@@ -573,9 +1044,8 @@
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         }
 
-        // --- 3. DYNAMIC QUIZ ---
+        // --- QUIZ LOGIC (kept the same) ---
         const quizPool = [
-            // MCQ
             { type: 'mcq', q: "What does MRSA specifically stand for?", options: ["Methicillin-resistant Staphylococcus aureus", "Multiple-resistant Streptococcus A", "Methicillin-susceptible Staphylococcus aureus", "Medical-resistant Systemic aureus"], answer: 0 },
             { type: 'mcq', q: "What was the estimated global antibiotic consumption in 2015 based on the original article data?", options: ["12 billion DDDs", "25 billion DDDs", "42 billion DDDs", "65 billion DDDs"], answer: 2 },
             { type: 'mcq', q: "Which mathematical model scenario predicts a 200% increase in antibiotic consumption by 2030?", options: ["The Optimistic Scenario", "The Baseline Growth Scenario", "The Pipeline Scenario", "The Pessimistic Scenario"], answer: 3 },
@@ -588,7 +1058,6 @@
             { type: 'mcq', q: "Where were superbug 'genetic fingerprints' recently discovered outside of clinical settings according to Science News?", options: ["Space stations", "Volcanic ash", "Soil, seawater, and agricultural exhaust", "Inside deep-sea fish"], answer: 2 },
             { type: 'mcq', q: "According to the UNEP report, what environmental factor is a massive driver of AMR?", options: ["Solar radiation", "Pollution and effluent from pharmaceutical manufacturing and agriculture", "Deforestation", "Ozone depletion"], answer: 1 },
             { type: 'mcq', q: "Which of the following is a Mayo Clinic recommendation for preventing CA-MRSA?", options: ["Taking daily antibiotics just in case", "Sharing towels to build immunity", "Keeping wounds clean and covered until healed", "Avoiding all physical exercise"], answer: 2 },
-            // Typed
             { type: 'text', q: "Fill in the Blank (WHO Data): The World Bank estimates AMR could result in an additional $1 ________ in global healthcare costs by 2050.", accepted: ["trillion", "1 trillion", "one trillion"] },
             { type: 'text', q: "Acronym Check: What does 'DDD' stand for when measuring antibiotic consumption?", accepted: ["defined daily dose"] },
             { type: 'text', q: "Acronym Check: What does 'CA-MRSA' specifically stand for?", accepted: ["community-associated mrsa", "community associated mrsa"] },
@@ -714,8 +1183,17 @@
         // --- INIT ALL ---
         window.onload = () => {
             initCards();
-            initQuiz(); 
-            if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            initQuiz();
+            initializeModules();
+            initializeSources();
+            
+            // Load saved notes
+            document.getElementById('notes-textarea').value = globalNotes;
+            updateHighlightedNotesList();
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
         };
 
         document.addEventListener('keydown', (e) => {
